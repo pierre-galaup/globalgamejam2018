@@ -1,6 +1,5 @@
 ﻿using GameTime;
 using Map;
-using UnityEditor;
 using UnityEngine;
 
 namespace Game
@@ -42,7 +41,7 @@ namespace Game
         public void Quit()
         {
 #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif
