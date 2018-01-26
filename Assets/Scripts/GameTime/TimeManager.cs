@@ -5,7 +5,7 @@ namespace GameTime
 {
     public class TimeManager : MonoBehaviour
     {
-        public delegate void StartTimerEvent();
+        public delegate void StartTimerEvent(GameTime time);
 
         public static event StartTimerEvent OnTimerStarted;
 
@@ -20,6 +20,14 @@ namespace GameTime
         public delegate void ResumeTimerEvent(GameTime time);
 
         public static event ResumeTimerEvent OnTimerResumed;
+
+        public delegate void NewMonthEvent(GameTime time);
+
+        public static event NewMonthEvent OnNewMonth;
+
+        public delegate void NewYearEvent(GameTime time);
+
+        public static event NewYearEvent OnNewYear;
 
         public class GameTime
         {
@@ -43,7 +51,9 @@ namespace GameTime
         {
             _timer = 0;
             _timerIsOn = true;
-            OnTimerStarted?.Invoke();
+            OnTimerStarted?.Invoke(GetGameTime());
+            OnNewMonth?.Invoke(GetGameTime());
+            OnNewYear?.Invoke(GetGameTime());
             _coroutine = StartCoroutine(NextTime());
         }
 
@@ -89,6 +99,16 @@ namespace GameTime
 
                 yield return new WaitForSeconds(1);
                 _timer += 1;
+
+                if ((int)_timer % _realSecondsForOneMonth == 0)
+                {
+                    OnNewMonth?.Invoke(GetGameTime());
+                }
+
+                if ((int)_timer % (_realSecondsForOneMonth * 12) == 0)
+                {
+                    OnNewYear?.Invoke(GetGameTime());
+                }
 
                 //
             }
