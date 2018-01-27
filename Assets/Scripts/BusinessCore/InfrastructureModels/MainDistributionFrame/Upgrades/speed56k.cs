@@ -23,7 +23,7 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame.Upgrades
             this.Level = 1;
             this.BuildCost = 3000;
             this.MaintenanceCost = 80;
-            this.SatisfactionProvided = 1.25;
+            this.SatisfactionProvided = 1.1;
             this.SatisfactionRange = 55;
             this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 1994 };
             this.ExpirationDate = new TimeManager.GameTime() { Months = 0, Years = 1998 };

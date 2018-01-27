@@ -1,8 +1,8 @@
 ﻿using GameTime;
 
-namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
+namespace BusinessCore.InfrastructureModels.MainDistributionFrame.Upgrades
 {
-    public class Speed56K : IInfrastructureLevel
+    public class ADSL : IInfrastructureLevel
     {
         public string Name { get; }
         public string Description { get; }
@@ -15,18 +15,18 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
         public TimeManager.GameTime CreationDate { get; }
         public TimeManager.GameTime ExpirationDate { get; }
 
-        public Speed56K()
+        public ADSL()
         {
-            this.Name = "56 kbit/s";
-            this.Description = "Ok, this is still slow, but faster than before, right? RIGHT?";
+            this.Name = "ADSL";
+            this.Description = "More Speed ! I can watch a video and play videogames!";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
-            this.Level = 1;
-            this.BuildCost = 10000;
-            this.MaintenanceCost = 1500;
-            this.SatisfactionProvided = 1.10;
+            this.Level = 3;
+            this.BuildCost = 19000;
+            this.MaintenanceCost = 450;
+            this.SatisfactionProvided = 1.2;
             this.SatisfactionRange = 55;
-            this.CreationDate = new TimeManager.GameTime() {Months = 0, Years = 1994};
-            this.ExpirationDate = new TimeManager.GameTime(){Months = 0, Years = 1998};
+            this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 1998 };
+            this.ExpirationDate = new TimeManager.GameTime() { Months = 0, Years = 2016 };
         }
     }
 }

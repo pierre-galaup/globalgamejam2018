@@ -46,14 +46,20 @@ namespace BusinessCore.InfrastructureModels.CellTower
             var technologies = new List<IInfrastructureLevel>
             {
                 new Upgrades.OneG(),
-                new Upgrades.TwoG()
+                new Upgrades.TwoG(),
+                new Upgrades.ThreeG(),
+                new Upgrades.FourG(),
+                new Upgrades.FiveG()
             };
             this.Upgrades[InfrastructureLevelType.Technology] = technologies;
 
             var capacity = new List<IInfrastructureLevel>
             {
                 new Upgrades.LevelOne(),
-                new Upgrades.LevelTwo()
+                new Upgrades.LevelTwo(),
+                new Upgrades.LevelThree(),
+                new Upgrades.LevelFour(),
+                new Upgrades.LevelFive()
             };
             this.Upgrades[InfrastructureLevelType.Capacity] = capacity;
         }

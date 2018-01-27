@@ -22,7 +22,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
             this.InfrastructureLevelType = InfrastructureLevelType.Capacity;
             this.Level = 1;
             this.BuildCost = 3000;
-            this.MaintenanceCost = 80;
+            this.MaintenanceCost = 180;
             this.SatisfactionProvided = 1.25;
             this.SatisfactionRange = 55;
             this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 1994 };

@@ -2,7 +2,7 @@
 
 namespace BusinessCore.InfrastructureModels.CellularCentral.Upgrades
 {
-    public class OneG : IInfrastructureLevel
+    public class FiveG : IInfrastructureLevel
     {
         public string Name { get; }
         public string Description { get; }
@@ -15,18 +15,18 @@ namespace BusinessCore.InfrastructureModels.CellularCentral.Upgrades
         public TimeManager.GameTime CreationDate { get; }
         public TimeManager.GameTime ExpirationDate { get; }
 
-        public OneG()
+        public FiveG()
         {
-            this.Name = "1G";
-            this.Description = "This is slow, like reaaaaaaaally slow.";
+            this.Name = "5G";
+            this.Description = "Ok, this is still slow, but faster than before, right? RIGHT?";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
-            this.Level = 0;
-            this.BuildCost = 1500;
-            this.MaintenanceCost = 100;
-            this.SatisfactionProvided = 1.40;
-            this.SatisfactionRange = 50;
-            this.CreationDate = new TimeManager.GameTime { Months = 0, Years = 1980 };
-            this.ExpirationDate = new TimeManager.GameTime { Months = 0, Years = 1990 };
+            this.Level = 4;
+            this.BuildCost = 24000;
+            this.MaintenanceCost = 1600;
+            this.SatisfactionProvided = 1.2;
+            this.SatisfactionRange = 55;
+            this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 2020 };
+            this.ExpirationDate = new TimeManager.GameTime() { Months = 0, Years = 2050 };
         }
     }
 }

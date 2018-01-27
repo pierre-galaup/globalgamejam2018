@@ -1,8 +1,8 @@
 ﻿using GameTime;
 
-namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
+namespace BusinessCore.InfrastructureModels.CellTower.Upgrades
 {
-    public class Speed56K : IInfrastructureLevel
+    public class LevelThree : IInfrastructureLevel
     {
         public string Name { get; }
         public string Description { get; }
@@ -15,18 +15,18 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
         public TimeManager.GameTime CreationDate { get; }
         public TimeManager.GameTime ExpirationDate { get; }
 
-        public Speed56K()
+        public LevelThree()
         {
-            this.Name = "56 kbit/s";
+            this.Name = "Level Three";
             this.Description = "Ok, this is still slow, but faster than before, right? RIGHT?";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
-            this.Level = 1;
-            this.BuildCost = 10000;
-            this.MaintenanceCost = 1500;
-            this.SatisfactionProvided = 1.10;
+            this.Level = 2;
+            this.BuildCost = 6000;
+            this.MaintenanceCost = 160;
+            this.SatisfactionProvided = 1.1;
             this.SatisfactionRange = 55;
-            this.CreationDate = new TimeManager.GameTime() {Months = 0, Years = 1994};
-            this.ExpirationDate = new TimeManager.GameTime(){Months = 0, Years = 1998};
+            this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 2000 };
+            this.ExpirationDate = new TimeManager.GameTime() { Months = 0, Years = 2016 };
         }
     }
 }

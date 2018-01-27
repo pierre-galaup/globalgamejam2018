@@ -49,14 +49,22 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame
             var technologies = new List<IInfrastructureLevel>
             {
                 new Upgrades.Speed1200Bits(),
-                new Upgrades.Speed56K()
+                new Upgrades.Speed56K(),
+                new Upgrades.AOL(),
+                new Upgrades.ADSL(),
+                new Upgrades.VDSL(),
+                new Upgrades.Fibre()
             };
             this.Upgrades[InfrastructureLevelType.Technology] = technologies;
 
             var capacity = new List<IInfrastructureLevel>
             {
                 new Upgrades.LevelOne(),
-                new Upgrades.LevelTwo()
+                new Upgrades.LevelTwo(),
+                new Upgrades.LevelThree(),
+                new Upgrades.LevelFour(),
+                new Upgrades.LevelFive(),
+                new Upgrades.LevelSix()
             };
             this.Upgrades[InfrastructureLevelType.Capacity] = capacity;
 
