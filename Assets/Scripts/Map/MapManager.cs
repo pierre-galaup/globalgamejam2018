@@ -124,6 +124,7 @@ namespace Map
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)
             {
                 GameObject infrastructure = Instantiate(building);
+                infrastructure.SetActive(false);
                 if (!GameManager.Instance.BusinessManager.CanBuild(infrastructure.GetComponent<IInfrastructure>()))
                 {
                     Debug.Log("Cannot build");
@@ -131,6 +132,7 @@ namespace Map
                     return;
                 }
                 GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>());
+                infrastructure.SetActive(true);
                 infrastructure.transform.SetParent(_currentCell.transform, false);
 
                 _currentCell.Building = infrastructure;
