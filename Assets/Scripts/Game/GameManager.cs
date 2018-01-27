@@ -1,6 +1,7 @@
 ﻿using GameTime;
 using Map;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -48,6 +49,11 @@ namespace Game
 #else
             Application.Quit();
 #endif
+        }
+
+        public void GameOver()
+        {
+            SceneManager.LoadScene("Menu");
         }
     }
 }
