@@ -40,6 +40,17 @@ namespace Map
             _buildMenu.SetActive(false);
         }
 
+        public Cell GetCell(float x, float y)
+        {
+            Vector2 vector = new Vector2(x, y);
+            if (_mapCells.ContainsKey(vector))
+            {
+                return _mapCells[vector].GetComponent<Cell>();
+            }
+
+            return null;
+        }
+
         public void CreateMap(int height, int width)
         {
             _map = Instantiate(_prefabMap);
