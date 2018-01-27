@@ -142,14 +142,6 @@ namespace Map
             _currentCell = null;
         }
 
-        public void InformationsOnCurrentCell()
-        {
-            if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
-            {
-                // TODO : UI ?
-            }
-        }
-
         public void UpgradeTechnologyOnCurrentCell()
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
