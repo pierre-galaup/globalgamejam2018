@@ -48,14 +48,14 @@ namespace Town
         {
             while (true)
             {
+                float waitTime = _random.Next(2, 6);
+                yield return new WaitForSeconds(waitTime * Time.timeScale);
+
                 if (_gameIsPaused)
                 {
                     while (_gameIsPaused)
                         yield return null;
                 }
-
-                float waitTime = _random.Next(2, 6);
-                yield return new WaitForSeconds(waitTime * Time.timeScale);
 
                 float variation = _random.Next(-15, 16) / 1000f;
                 Peoples += (int)(Peoples * (_growthRate + variation));

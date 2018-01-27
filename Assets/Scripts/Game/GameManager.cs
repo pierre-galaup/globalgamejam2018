@@ -28,7 +28,6 @@ namespace Game
         [SerializeField]
         private int _widthMap = 20;
 
-        // Use this for initialization
         private void Awake()
         {
             if (Instance == null)
