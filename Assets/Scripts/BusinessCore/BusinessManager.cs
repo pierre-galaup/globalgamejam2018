@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using Game;
 using UnityEngine;
 
 namespace BusinessCore
@@ -46,7 +44,6 @@ namespace BusinessCore
 
         public bool CanUpgradeTechnology(IInfratructure infrastructureToUpgrade)
         {
-            
             return false;
         }
 
@@ -75,8 +72,8 @@ namespace BusinessCore
         {
             this._customersManager.Update();
             this.Money -= this.MaintenanceCosts;
-            //if (this.Money < 0)
-            //    GameManager.Instance.GameOver();
+            if (this.Money < 0)
+                GameManager.Instance.GameOver();
         }
     }
 }
