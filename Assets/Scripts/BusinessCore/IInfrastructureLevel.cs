@@ -1,4 +1,6 @@
-﻿namespace BusinessCore
+﻿using GameTime;
+
+namespace BusinessCore
 {
     public interface IInfrastructureLevel
     {
@@ -12,8 +14,10 @@
         /// </summary>
         string Description { get; }
 
+        InfrastructureLevelType InfrastructureLevelType { get; }
+
         /// <summary>
-        /// Level of the upgrade, from 1 to x
+        /// Level of the upgrade, from 0 to x. 0 is the default value
         /// </summary>
         int Level { get; }
 
@@ -36,5 +40,15 @@
         /// Range of satisfaction
         /// </summary>
         double SatisfactionRange { get; }
+
+        /// <summary>
+        /// In which year this item is available
+        /// </summary>
+        TimeManager.GameTime CreationDate { get; }
+
+        /// <summary>
+        /// In which year this infrastructure become deprecated
+        /// </summary>
+        TimeManager.GameTime ExpirationDate { get; }
     }
 }

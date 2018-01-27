@@ -6,20 +6,20 @@ namespace BusinessCore
 {
     public class CustomersManager
     {
-        private double customerSatisfaction;
-        private double marketShare;
+        private double _customerSatisfaction;
+        private double _marketShare;
 
         /// <summary>
         /// Market share owned by the company
         /// </summary>
         public double MarketShare
         {
-            get { return marketShare; }
+            get { return _marketShare; }
             private set
             {
                 if (value < 0.01) // Minimal value for market share. Below this value, the formula will be broken
                     value = 0.01;
-                marketShare = value;
+                _marketShare = value;
             }
         }
 
@@ -28,13 +28,13 @@ namespace BusinessCore
         /// </summary>
         public double CustomerSatisfaction
         {
-            get { return customerSatisfaction; }
+            get { return _customerSatisfaction; }
             private set
             {
                 // Minimal value for customer satisfaction. Below this value, the formula will be broken
                 if (value <= 0.01)
                     value = 0.01;
-                customerSatisfaction = value;
+                _customerSatisfaction = value;
             }
         }
 
