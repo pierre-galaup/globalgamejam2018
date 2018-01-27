@@ -2152,6 +2152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 800949144}
+  _money: 20000
 --- !u!1 &1230109733
 GameObject:
   m_ObjectHideFlags: 0

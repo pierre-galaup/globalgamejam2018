@@ -45,7 +45,7 @@ namespace Game
             StartGame();
         }
 
-        public void StartGame()
+        private void StartGame()
         {
             MapManager.CreateMap(_heightMap, _widthMap);
             TimeManager.StartTimer();

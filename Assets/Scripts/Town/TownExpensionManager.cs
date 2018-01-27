@@ -136,6 +136,8 @@ namespace Town
 
                 GameObject disctrictBuilding = Instantiate(disctrict);
                 disctrictBuilding.transform.SetParent(disctrictGameObject.transform, false);
+                int rotation = _random.Next(0, 4);
+                disctrictBuilding.transform.localRotation = Quaternion.Euler(new Vector3(0, 90 * rotation, 0));
                 disctrictGameObject.transform.SetParent(cell.transform, false);
 
                 cell.Building = disctrictGameObject;

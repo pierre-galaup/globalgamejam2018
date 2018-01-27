@@ -13,6 +13,7 @@ namespace Town
         private float _growthRate = 0.05f;
         private Coroutine _coroutine;
         private bool _gameIsPaused = false;
+        private readonly System.Random _random = new System.Random();
 
         private void Awake()
         {
@@ -32,6 +33,7 @@ namespace Town
 
         private void Start()
         {
+            Peoples = _random.Next(6000, 10001);
             _coroutine = StartCoroutine(GrowthDistrict());
         }
 
@@ -52,9 +54,11 @@ namespace Town
                         yield return null;
                 }
 
-                yield return new WaitForSeconds(2 * Time.timeScale);
+                float waitTime = _random.Next(2, 6);
+                yield return new WaitForSeconds(waitTime * Time.timeScale);
 
-                Peoples += (int)(Peoples * _growthRate);
+                float variation = _random.Next(-15, 16) / 1000f;
+                Peoples += (int)(Peoples * (_growthRate + variation));
 
                 if (Peoples >= 23000 && Level != 5)
                 {
@@ -91,6 +95,8 @@ namespace Town
                 GameObject newBuilding = Instantiate(building);
                 Destroy(transform.GetChild(0).gameObject);
                 newBuilding.transform.SetParent(transform, false);
+                int rotation = _random.Next(0, 4);
+                newBuilding.transform.localRotation = Quaternion.Euler(new Vector3(0, 90 * rotation, 0));
             }
         }
     }
