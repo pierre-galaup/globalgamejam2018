@@ -14,6 +14,9 @@ namespace BusinessCore
         /// </summary>
         string Description { get; }
 
+        /// <summary>
+        /// Type of upgrade
+        /// </summary>
         InfrastructureLevelType InfrastructureLevelType { get; }
 
         /// <summary>

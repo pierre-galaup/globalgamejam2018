@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using BusinessCore;
+using Game;
 using UnityEngine;
 
 namespace Map
@@ -122,6 +124,13 @@ namespace Map
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)
             {
                 GameObject infrastructure = Instantiate(building);
+                if (!GameManager.Instance.BusinessManager.CanBuild(infrastructure.GetComponent<IInfratructure>()))
+                {
+                    Debug.Log("Cannot build");
+                    Destroy(infrastructure);
+                    return;
+                }
+                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfratructure>());
                 infrastructure.transform.SetParent(_currentCell.transform, false);
 
                 _currentCell.Building = infrastructure;

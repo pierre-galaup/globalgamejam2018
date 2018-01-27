@@ -1,20 +1,54 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game;
 using UnityEngine;
 
 namespace BusinessCore.InfrastructureModels.WiredInternetCentral
 {
     public class Central : MonoBehaviour, IInfratructure
     {
-        private readonly Dictionary<InfrastructureLevelType, IInfrastructureLevel> _currentLevels;
-        private readonly BusinessManager _businessManager;
+        private Dictionary<InfrastructureLevelType, IInfrastructureLevel> _currentLevels;
+        private BusinessManager _businessManager;
 
-        public int Id { get; }
-        public string Name { get; }
-        public string Description { get; }
-        public int Limit { get; }
-        public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; }
-        public InfrastructureType InfrastructureType { get; }
+        [SerializeField]
+        private string _name = "Central";
+
+        [SerializeField]
+        private string _description = "Central node for wired internet network";
+
+        [SerializeField]
+        private int _limit = 1;
+
+        [SerializeField]
+        private InfrastructureType _infrastructureType = InfrastructureType.WiredInternet;
+
+        public int Id { get; private set; }
+
+        public string Name
+        {
+            get { return _name; }
+            private set { _name = value; }
+        }
+
+        public string Description
+        {
+            get { return _description; }
+            private set { _description = value; }
+        }
+
+        public int Limit
+        {
+            get { return _limit; }
+            private set { _limit = value; }
+        }
+
+        public InfrastructureType InfrastructureType
+        {
+            get { return _infrastructureType; }
+            private set { _infrastructureType = value; }
+        }
+
+        public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; private set; }
 
         public IEnumerable<IInfrastructureLevel> CurrentLevels => _currentLevels.Values;
 
@@ -28,16 +62,11 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
             get { return this.CurrentLevels.Sum(level => level.MaintenanceCost); }
         }
 
-        public Central(BusinessManager businessManager)
+        private void Awake()
         {
-            this._businessManager = businessManager;
+            this.Id = GameManager.Instance.BusinessManager.GetId;
+            this._businessManager = GameManager.Instance.BusinessManager;
             this._currentLevels = new Dictionary<InfrastructureLevelType, IInfrastructureLevel>();
-
-            this.Name = "Central";
-            this.Id = this._businessManager.GetId;
-            this.Description = "Central node for wired internet network";
-            this.Limit = 1;
-            this.InfrastructureType = InfrastructureType.WiredInternet;
             this.Upgrades = new Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>>();
             this.InitializeUpgrades();
 
