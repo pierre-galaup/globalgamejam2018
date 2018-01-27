@@ -14,6 +14,11 @@ namespace Translation
             TextManager.OnLanguageLoaded += OnLanguageLoaded;
         }
 
+        private void OnDestroy()
+        {
+            TextManager.OnLanguageLoaded -= OnLanguageLoaded;
+        }
+
         private void OnLanguageLoaded(bool firstLaunch)
         {
             ChangeText();

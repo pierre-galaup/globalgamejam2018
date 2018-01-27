@@ -23,5 +23,17 @@ msgstr "LANCER UNE PARTIE"
 msgid "QUIT GAME"
 msgstr "QUITTER LE JEU"
 
+msgid "Cell tower"
+msgstr "Antenne"
+
+msgid "MDF"
+msgstr "Répartiteur"
+
+msgid "Internet central"
+msgstr "Centrale internet"
+
+msgid "Phone central"
+msgstr "Centrale téléphonique"
+
 msgid ""
 msgstr ""

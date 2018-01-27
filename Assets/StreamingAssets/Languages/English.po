@@ -23,5 +23,17 @@ msgstr "START GAME"
 msgid "QUIT GAME"
 msgstr "QUIT GAME"
 
+msgid "Cell tower"
+msgstr "Cell tower"
+
+msgid "MDF"
+msgstr "MDF"
+
+msgid "Internet central"
+msgstr "Internet central"
+
+msgid "Phone central"
+msgstr "Phone central"
+
 msgid ""
 msgstr ""

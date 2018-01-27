@@ -18,6 +18,13 @@ namespace Map
         [SerializeField]
         private Material _unSelectedMaterial;
 
+        [Header("GUI")]
+        [SerializeField]
+        private GameObject _buildMenu;
+
+        [SerializeField]
+        private GameObject _infosMenu;
+
         private Dictionary<Vector2, GameObject> _mapCells;
         private GameObject _map;
         private Cell _currentCell = null;
@@ -25,6 +32,12 @@ namespace Map
         private void Awake()
         {
             _mapCells = new Dictionary<Vector2, GameObject>();
+        }
+
+        private void Start()
+        {
+            _infosMenu.SetActive(false);
+            _buildMenu.SetActive(false);
         }
 
         public void CreateMap(int height, int width)
@@ -61,12 +74,20 @@ namespace Map
 
         public void ClickOnCell(Cell cell)
         {
+            _buildMenu.SetActive(false);
+            _infosMenu.SetActive(false);
+
+            if (_currentCell == cell)
+            {
+                _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
+                _currentCell = null;
+                return;
+            }
+
             if (_currentCell != null)
             {
                 _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
             }
-
-            // TODO : SETACTIVE FALSE TOUTES LES UI CONSTRUCTIONS
 
             if (!cell.IsConstructible)
                 return;
@@ -76,11 +97,11 @@ namespace Map
 
             if (!cell.HaveBuilding) // Si la cellule n'a rien dessus et qu'elle est constructible
             {
-                // TODO : CONSTRUCT UI
+                _buildMenu.SetActive(true);
             }
             else if (cell.HaveBuilding) // Si la cellule a un truc dessus
             {
-                // TODO : UPGRADE/INFO UI
+                _infosMenu.SetActive(true);
             }
         }
 
@@ -88,11 +109,14 @@ namespace Map
         {
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)
             {
-                _currentCell.Building = building;
+                GameObject infrastructure = Instantiate(building);
+                infrastructure.transform.SetParent(_currentCell.transform, false);
+
+                _currentCell.Building = infrastructure;
                 _currentCell.HaveBuilding = true;
             }
 
-            // TODO : REMOVE CONSTRUCT UI
+            _buildMenu.SetActive(false);
             _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
             _currentCell = null;
         }
@@ -112,7 +136,7 @@ namespace Map
                 // TODO : UI
             }
 
-            // TODO : REMOVE CONSTRUCT UI
+            _infosMenu.SetActive(false);
             _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
             _currentCell = null;
         }
@@ -129,7 +153,7 @@ namespace Map
                 _currentCell.HaveBuilding = false;
             }
 
-            // TODO : REMOVE CONSTRUCT UI
+            _infosMenu.SetActive(false);
             _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
             _currentCell = null;
         }
