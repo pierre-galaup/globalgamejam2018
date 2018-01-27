@@ -111,7 +111,7 @@ namespace GameTime
         {
             int months = (int)_timer / _realSecondsForOneMonth + 1;
             int years = months / 12;
-            months %= 12;
+            months = months % 12 + 1;
 
             return new GameTime
             {
