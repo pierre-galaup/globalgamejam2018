@@ -150,11 +150,11 @@ namespace Map
             }
         }
 
-        public void UpgradeOnCurrentCell()
+        public void UpgradeTechnologyOnCurrentCell()
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
-                // TODO : UI
+                // TODO
             }
 
             _infosMenu.SetActive(false);
@@ -162,14 +162,25 @@ namespace Map
             _currentCell = null;
         }
 
-        public void SellOnCurrentCell()
+        public void UpgradeCapacityOnCurrentCell()
+        {
+            if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
+            {
+                // TODO
+            }
+
+            _infosMenu.SetActive(false);
+            _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
+            _currentCell = null;
+        }
+
+        public void DestroyOnCurrentCell()
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
                 // TODO
 
-                _currentCell.Building.SetActive(false);
-
+                DestroyImmediate(_currentCell.Building);
                 _currentCell.Building = null;
                 _currentCell.HaveBuilding = false;
             }
