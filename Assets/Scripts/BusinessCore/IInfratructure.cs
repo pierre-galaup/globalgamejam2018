@@ -40,12 +40,20 @@ namespace BusinessCore
         /// Check if infrastructure can be upgraded
         /// </summary>
         /// <returns>True if upgrade can be performed, else False</returns>
-        bool CanUpgrade(IInfrastructureLevel newLevel);
+        bool CanUpgrade(InfrastructureLevelType typeToUpgrade);
 
         /// <summary>
         /// Upgrade the infrastructure to the next level
         /// </summary>
-        void Upgrade(IInfrastructureLevel newLevel);
+        /// <returns>The upgraded object</returns>
+        IInfrastructureLevel Upgrade(InfrastructureLevelType typeToUpgrade);
+
+        /// <summary>
+        /// Get the next upgrade available for the given type
+        /// </summary>
+        /// <param name="upgradeType">Type of upgrade</param>
+        /// <returns>The upgrade level object.  Can be null if no upgrade.</returns>
+        IInfrastructureLevel GetNextUpgrade(InfrastructureLevelType upgradeType);
 
         /// <summary>
         /// Current levels of the infrastructure upgrades
@@ -57,6 +65,5 @@ namespace BusinessCore
         /// We need a List here, because it MUST be ordered and IEnumerable do not garantie that it is ordered.
         /// </summary>
         Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; }
-
     }
 }

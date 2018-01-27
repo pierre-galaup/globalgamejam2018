@@ -7,6 +7,9 @@ namespace BusinessCore
 {
     public class BusinessManager : MonoBehaviour
     {
+        /// <summary>
+        /// Get an unique id
+        /// </summary>
         internal int GetId => _lastId++;
 
         /// <summary>
@@ -14,13 +17,17 @@ namespace BusinessCore
         /// </summary>
         private readonly List<IInfratructure> _infrastructuresList = new List<IInfratructure>();
 
+        /// <summary>
+        /// 
+        /// </summary>
         private CustomersManager _customersManager;
+
         private static int _lastId = 0;
 
-        [SerializeField]
+        public GameManager GameManager = GameManager.Instance;
+
         public double Money { get; private set; }
 
-        [SerializeField]
         public double MaintenanceCosts { get; private set; }
 
         public bool CanBuild(IInfratructure infrastructureToBuild)
@@ -44,22 +51,34 @@ namespace BusinessCore
 
         public bool CanUpgradeTechnology(IInfratructure infrastructureToUpgrade)
         {
-            return false;
+            return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
         }
 
         public bool UpgradeTechnology(IInfratructure infrastructureToUpgrade)
         {
-            return false;
+            var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Technology);
+            if (upgrade == null)
+                return false;
+            this.Money -= upgrade.BuildCost;
+            this.MaintenanceCosts = this.MaintenanceCosts - infrastructureToUpgrade.MaintenanceCost +
+                                    upgrade.MaintenanceCost;
+            return true;
         }
 
         public bool CanUpgradeCapacity(IInfratructure infrastructureToUpgrade)
         {
-            return false;
+            return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
         }
 
         public bool UpgradeCapacity(IInfratructure infrastructureToUpgrade)
         {
-            return false;
+            var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Capacity);
+            if (upgrade == null)
+                return false;
+            this.Money -= upgrade.BuildCost;
+            this.MaintenanceCosts = this.MaintenanceCosts - infrastructureToUpgrade.MaintenanceCost +
+                                    upgrade.MaintenanceCost;
+            return true;
         }
 
         private void Awake()
@@ -73,7 +92,7 @@ namespace BusinessCore
             this._customersManager.Update();
             this.Money -= this.MaintenanceCosts;
             if (this.Money < 0)
-                GameManager.Instance.GameOver();
+                this.GameManager.GameOver();
         }
     }
 }

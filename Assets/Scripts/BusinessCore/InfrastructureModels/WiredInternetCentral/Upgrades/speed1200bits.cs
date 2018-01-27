@@ -1,6 +1,4 @@
-﻿using BusinessCore.InfrastructureLevelTypes;
-using GameTime;
-using UnityEngine;
+﻿using GameTime;
 
 namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
 {
@@ -21,7 +19,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
         {
             this.Name = "1200 bit/s";
             this.Description = "This is slow, like reaaaaaaaally slow.";
-            this.InfrastructureLevelType = new Technology();
+            this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 0;
             this.BuildCost = 5000;
             this.MaintenanceCost = 150;

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using BusinessCore.InfrastructureLevelTypes;
-using BusinessCore.InfrastructureTypes;
 using UnityEngine;
 
 namespace BusinessCore.InfrastructureModels.WiredInternetCentral
@@ -16,6 +13,10 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
         public string Name { get; }
         public string Description { get; }
         public int Limit { get; }
+        public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; }
+        public InfrastructureType InfrastructureType { get; }
+
+        public IEnumerable<IInfrastructureLevel> CurrentLevels => _currentLevels.Values;
 
         public double BuildCost
         {
@@ -27,8 +28,6 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
             get { return this.CurrentLevels.Sum(level => level.MaintenanceCost); }
         }
 
-        public InfrastructureType InfrastructureType { get; }
-
         public Central(BusinessManager businessManager)
         {
             this._businessManager = businessManager;
@@ -38,7 +37,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
             this.Id = this._businessManager.GetId;
             this.Description = "Central node for wired internet network";
             this.Limit = 1;
-            this.InfrastructureType = new WiredInternet();
+            this.InfrastructureType = InfrastructureType.WiredInternet;
             this.Upgrades = new Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>>();
             this.InitializeUpgrades();
 
@@ -51,21 +50,39 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
             }
         }
 
-        public bool CanUpgrade(IInfrastructureLevel newLevel)
+        public bool CanUpgrade(InfrastructureLevelType typeToUpgrade)
         {
-            return _businessManager.Money - newLevel?.BuildCost < 0;
+            if (!this.Upgrades.ContainsKey(typeToUpgrade))
+                return false;
+            var upgradeLevel = this.GetNextUpgrade(typeToUpgrade);
+            if (upgradeLevel == null)
+                return false;
+            var currentTime = _businessManager.GameManager.TimeManager.GetGameTime();
+            if (currentTime < upgradeLevel.CreationDate)
+                return false;
+            return _businessManager.Money - upgradeLevel?.BuildCost < 0;
         }
 
-        public void Upgrade(IInfrastructureLevel newLevel)
+        public IInfrastructureLevel Upgrade(InfrastructureLevelType typeToUpgrade)
         {
-            if (newLevel == null)
-                return;
-            this._currentLevels[newLevel.InfrastructureLevelType] = newLevel;
+            if (!this.CanUpgrade(typeToUpgrade))
+                return null;
+            this._currentLevels[typeToUpgrade] = this.GetNextUpgrade(typeToUpgrade);
+            return this._currentLevels[typeToUpgrade];
         }
 
-        public IEnumerable<IInfrastructureLevel> CurrentLevels => _currentLevels.Values;
-
-        public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; }
+        public IInfrastructureLevel GetNextUpgrade(InfrastructureLevelType upgradeType)
+        {
+            IInfrastructureLevel upgrade = null;
+            if (!this._currentLevels.ContainsKey(upgradeType))
+                upgrade = this.Upgrades[upgradeType].FirstOrDefault();
+            else
+            {
+                var currentLevel = this._currentLevels[upgradeType];
+                upgrade = this.Upgrades[upgradeType].FirstOrDefault(e => e.Level == currentLevel.Level + 1);
+            }
+            return upgrade;
+        }
 
         private void InitializeUpgrades()
         {
@@ -74,7 +91,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
                 new Upgrades.Speed1200Bits(),
                 new Upgrades.Speed56K()
             };
-            this.Upgrades[new Technology()] = technologies;
+            this.Upgrades[InfrastructureLevelType.Technology] = technologies;
         }
     }
 }
