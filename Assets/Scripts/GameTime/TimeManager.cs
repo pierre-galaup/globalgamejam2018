@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace GameTime
@@ -29,11 +30,40 @@ namespace GameTime
 
         public static event NewYearEvent OnNewYear;
 
-        public class GameTime
+        public class GameTime : IEquatable<GameTime>
         {
             public int Months;
 
             public int Years;
+
+            public bool Equals(GameTime other)
+            {
+                if (ReferenceEquals(null, other))
+                    return false;
+                if (ReferenceEquals(this, other))
+                    return true;
+                return Months == other.Months && Years == other.Years;
+            }
+
+            public static bool operator <(GameTime left, GameTime right)
+            {
+                return left.Years < right.Years || left.Years == right.Years && left.Months < right.Months;
+            }
+
+            public static bool operator >(GameTime left, GameTime right)
+            {
+                return left.Years > right.Years || left.Years == right.Years && left.Months > right.Months;
+            }
+
+            public static bool operator <=(GameTime left, GameTime right)
+            {
+                return left.Years <= right.Years || left.Years == right.Years && left.Months <= right.Months;
+            }
+
+            public static bool operator >=(GameTime left, GameTime right)
+            {
+                return left.Years >= right.Years || left.Years == right.Years && left.Months >= right.Months;
+            }
         }
 
         [SerializeField]
