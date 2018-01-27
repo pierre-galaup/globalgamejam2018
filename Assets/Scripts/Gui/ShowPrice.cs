@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShowPrice : MonoBehaviour {
 
-    Text priceValue;
+    public Text priceValue;
     
 	void Start ()
     {
