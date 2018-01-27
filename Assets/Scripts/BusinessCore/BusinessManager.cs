@@ -18,15 +18,13 @@ namespace BusinessCore
         /// </summary>
         private readonly List<IInfrastructure> _infrastructuresList = new List<IInfrastructure>();
 
-        private readonly Dictionary<InfrastructureType, CustomersManager> _networks =
-            new Dictionary<InfrastructureType, CustomersManager>();
+        private List<CustomersManager> _networks = new List<CustomersManager>();
 
         private static int _lastId = 0;
 
-        public GameManager GameManager = GameManager.Instance;
+        [SerializeField] private GameManager _gameManager;
 
-        [SerializeField]
-        private double _money = 20000;
+        [SerializeField] private double _money = 20000;
 
         public double Money
         {
@@ -34,14 +32,20 @@ namespace BusinessCore
             private set { _money = value; }
         }
 
+        public double Income { get; private set; }
+
+        public double MarketShare { get; private set; }
+
         public double MaintenanceCosts { get; private set; }
 
         private void Awake()
         {
-            this._networks[InfrastructureType.WiredInternet] = new CustomersManager(InfrastructureType.WiredInternet);
-            this._networks[InfrastructureType.CellularNetwork] =
-                new CustomersManager(InfrastructureType.CellularNetwork);
             TimeManager.OnNewMonth += this.OnNewMonth;
+        }
+
+        private void Start()
+        {
+            this._gameManager = GameManager.Instance;
         }
 
         public bool CanBuild(IInfrastructure infrastructureToBuild)
@@ -63,6 +67,9 @@ namespace BusinessCore
             this._infrastructuresList.Add(infrastructureToBuild);
             this.Money -= infrastructureToBuild.BuildCost;
             this.MaintenanceCosts += infrastructureToBuild.MaintenanceCost;
+            var customersManager = this.gameObject.AddComponent<CustomersManager>();
+            customersManager.NetworkType = infrastructureToBuild.InfrastructureType;
+            this._networks.Add(customersManager);
             return true;
         }
 
@@ -104,12 +111,24 @@ namespace BusinessCore
 
         private void OnNewMonth(TimeManager.GameTime time)
         {
+            this.Income = 0;
+            this.MarketShare = 0;
+            var marketShares = new List<double>();
+            var totalSubscribers = 0;
             foreach (var customersManager in this._networks)
-                customersManager.Value.Update();
+            {
+                customersManager.OnNewMonth();
+                this.Income += customersManager.MonthlyIncome;
+                marketShares.Add(customersManager.MarketShare);
+                totalSubscribers += customersManager.SubscribersNumber;
+            }
+            if (marketShares.Any())
+                this.MarketShare = marketShares.Average();
+            this.Money += this.Income;
             this.Money -= this.MaintenanceCosts;
-            Debug.Log($"Maintenance costs: ${this.MaintenanceCosts} - Money: ${this.Money}");
+            Debug.Log($"Account: ${this.Money} - Maintenance costs: ${this.MaintenanceCosts} - Income: ${this.Income} - Market Share : {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
             if (this.Money < 0)
-                this.GameManager.GameOver();
+                this._gameManager.GameOver();
         }
 
         private void OnDestroy()

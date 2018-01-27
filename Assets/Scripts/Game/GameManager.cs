@@ -28,7 +28,6 @@ namespace Game
         [SerializeField]
         private int _widthMap = 20;
 
-        // Use this for initialization
         private void Awake()
         {
             if (Instance == null)
@@ -45,7 +44,7 @@ namespace Game
             StartGame();
         }
 
-        public void StartGame()
+        private void StartGame()
         {
             MapManager.CreateMap(_heightMap, _widthMap);
             TimeManager.StartTimer();
