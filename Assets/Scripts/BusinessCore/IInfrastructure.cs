@@ -6,7 +6,7 @@ namespace BusinessCore
     /// <summary>
     /// Represent an infrastructure object, like NRO, Central, whatever
     /// </summary>
-    public interface IInfratructure
+    public interface IInfrastructure
     {
         /// <summary>
         /// Object id

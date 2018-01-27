@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Game;
 using GameTime;
 using Map;
 using UnityEngine;
@@ -9,14 +11,16 @@ namespace Town
     public class TownExpensionManager : MonoBehaviour
     {
         [Serializable]
-        public class Disctrict
+        public class DisctrictBuilding
         {
             public GameObject Building;
             public int Level = 1;
         }
 
         [SerializeField]
-        private List<Disctrict> _disctricts;
+        private List<DisctrictBuilding> _disctricts;
+
+        private readonly List<District> _allDistricts = new List<District>();
 
         private Cell _beginCell;
         private readonly System.Random _random = new System.Random();
@@ -60,23 +64,30 @@ namespace Town
                 switch (number)
                 {
                     case 0:
-                        cell = GameObject.Find("Cell_" + x + "x" + (y + 1)).GetComponent<Cell>();
+                        cell = GameManager.Instance.MapManager.GetCell(x, y + 1);
                         break;
 
                     case 1:
-                        cell = GameObject.Find("Cell_" + x + "x" + (y - 1)).GetComponent<Cell>();
+                        cell = GameManager.Instance.MapManager.GetCell(x, y - 1);
                         break;
 
                     case 2:
-                        cell = GameObject.Find("Cell_" + (x + 1) + "x" + y).GetComponent<Cell>();
+                        cell = GameManager.Instance.MapManager.GetCell(x + 1, y);
                         break;
 
                     case 3:
-                        cell = GameObject.Find("Cell_" + (x - 1) + "x" + y).GetComponent<Cell>();
+                        cell = GameManager.Instance.MapManager.GetCell(x - 1, y);
                         break;
                 }
 
-                result = ConstructNewDistrict(cell, _disctricts[0]);
+                if (cell == null)
+                {
+                    --numberOfBuildingRemaining;
+                    TestToConstruct(centerCell, number, numberOfBuildingRemaining);
+                    return;
+                }
+
+                result = ConstructNewDistrict(cell, GetBuilding(1));
 
                 if (result)
                     --numberOfBuildingRemaining;
@@ -95,24 +106,66 @@ namespace Town
 
         private void OnTimerStarted(TimeManager.GameTime time)
         {
-            _beginCell = GameObject.Find("Cell_0x0").GetComponent<Cell>();
-            ConstructNewDistrict(_beginCell, _disctricts[0]);
+            _beginCell = GameManager.Instance.MapManager.GetCell(0, 0);
+            ConstructNewDistrict(_beginCell, GetBuilding(1));
         }
 
-        private bool ConstructNewDistrict(Cell cell, Disctrict disctrict)
+        private bool ConstructNewDistrict(Cell cell, GameObject disctrict)
         {
             if (cell.IsConstructible && !cell.HaveBuilding)
             {
-                GameObject disctrictBuilding = Instantiate(disctrict.Building);
-                disctrictBuilding.transform.SetParent(cell.transform, false);
+                GameObject disctrictGameObject = new GameObject("District");
+                disctrictGameObject.AddComponent<District>();
+                _allDistricts.Add(disctrictGameObject.GetComponent<District>());
 
-                cell.Building = disctrictBuilding;
+                GameObject disctrictBuilding = Instantiate(disctrict);
+                disctrictBuilding.transform.SetParent(disctrictGameObject.transform, false);
+                disctrictGameObject.transform.SetParent(cell.transform, false);
+
+                cell.Building = disctrictGameObject;
                 cell.HaveBuilding = true;
                 cell.IsConstructible = false;
                 return true;
             }
 
             return false;
+        }
+
+        public int GetPeoplesNumber()
+        {
+            int number = 0;
+            foreach (District district in _allDistricts)
+            {
+                number += district.Peoples;
+            }
+
+            return number;
+        }
+
+        private void ShuffleList<T>(IList<T> list)
+        {
+            int n = list.Count;
+            System.Random rnd = new System.Random();
+            while (n > 1)
+            {
+                int k = rnd.Next(0, n) % n;
+                n--;
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
+        public GameObject GetBuilding(int level)
+        {
+            ShuffleList(_disctricts);
+            foreach (DisctrictBuilding disctrictBuilding in _disctricts)
+            {
+                if (disctrictBuilding.Level == level)
+                    return disctrictBuilding.Building;
+            }
+
+            return null;
         }
     }
 }

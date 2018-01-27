@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using BusinessCore;
+using Game;
 using UnityEngine;
 
 namespace Map
@@ -38,6 +40,17 @@ namespace Map
         {
             _infosMenu.SetActive(false);
             _buildMenu.SetActive(false);
+        }
+
+        public Cell GetCell(float x, float y)
+        {
+            Vector2 vector = new Vector2(x, y);
+            if (_mapCells.ContainsKey(vector))
+            {
+                return _mapCells[vector].GetComponent<Cell>();
+            }
+
+            return null;
         }
 
         public void CreateMap(int height, int width)
@@ -111,6 +124,13 @@ namespace Map
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)
             {
                 GameObject infrastructure = Instantiate(building);
+                if (!GameManager.Instance.BusinessManager.CanBuild(infrastructure.GetComponent<IInfrastructure>()))
+                {
+                    Debug.Log("Cannot build");
+                    Destroy(infrastructure);
+                    return;
+                }
+                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>());
                 infrastructure.transform.SetParent(_currentCell.transform, false);
 
                 _currentCell.Building = infrastructure;
@@ -122,19 +142,11 @@ namespace Map
             _currentCell = null;
         }
 
-        public void InformationsOnCurrentCell()
+        public void UpgradeTechnologyOnCurrentCell()
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
-                // TODO : UI ?
-            }
-        }
-
-        public void UpgradeOnCurrentCell()
-        {
-            if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
-            {
-                // TODO : UI
+                // TODO
             }
 
             _infosMenu.SetActive(false);
@@ -142,14 +154,25 @@ namespace Map
             _currentCell = null;
         }
 
-        public void SellOnCurrentCell()
+        public void UpgradeCapacityOnCurrentCell()
+        {
+            if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
+            {
+                // TODO
+            }
+
+            _infosMenu.SetActive(false);
+            _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
+            _currentCell = null;
+        }
+
+        public void DestroyOnCurrentCell()
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
                 // TODO
 
-                _currentCell.Building.SetActive(false);
-
+                DestroyImmediate(_currentCell.Building);
                 _currentCell.Building = null;
                 _currentCell.HaveBuilding = false;
             }

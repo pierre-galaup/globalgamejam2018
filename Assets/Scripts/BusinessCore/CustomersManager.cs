@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-
-namespace BusinessCore
+﻿namespace BusinessCore
 {
     public class CustomersManager
     {
         private double _customerSatisfaction;
         private double _marketShare;
+        private InfrastructureType _networkType;
 
         /// <summary>
         /// Market share owned by the company
@@ -47,6 +44,16 @@ namespace BusinessCore
         /// Customers satisfaction variation. 1 = no variation. 2 = 100% variation.
         /// </summary>
         public double CustomerSatisfactionVariation { get; set; }
+
+        /// <summary>
+        /// Define the price of the subscription
+        /// </summary>
+        public double SubscriptionPrice { get; set; }
+
+        public CustomersManager(InfrastructureType networkType)
+        {
+            this._networkType = networkType;
+        }
 
         /// <summary>
         /// Recalculate market share value according to variation. Should be called each month in game.

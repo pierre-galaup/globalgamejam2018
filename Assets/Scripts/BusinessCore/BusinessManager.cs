@@ -16,13 +16,9 @@ namespace BusinessCore
         /// <summary>
         /// List of insfrastructures built in the city
         /// </summary>
-        private readonly List<IInfratructure> _infrastructuresList = new List<IInfratructure>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private CustomersManager _customersManager;
-
+        private readonly List<IInfrastructure> _infrastructuresList = new List<IInfrastructure>();
+        private readonly Dictionary<InfrastructureType, CustomersManager> _networks = new Dictionary<InfrastructureType, CustomersManager>();
+        
         private static int _lastId = 0;
 
         public GameManager GameManager = GameManager.Instance;
@@ -31,7 +27,15 @@ namespace BusinessCore
 
         public double MaintenanceCosts { get; private set; }
 
-        public bool CanBuild(IInfratructure infrastructureToBuild)
+        private void Awake()
+        {
+            this._networks[InfrastructureType.WiredInternet] = new CustomersManager(InfrastructureType.WiredInternet);
+            this._networks[InfrastructureType.CellularNetwork] = new CustomersManager(InfrastructureType.CellularNetwork);
+            this.Money = 10000;
+            TimeManager.OnNewMonth += this.OnNewMonth;
+        }
+
+        public bool CanBuild(IInfrastructure infrastructureToBuild)
         {
             var infrastructureCount =
                 this._infrastructuresList.Count(e => e.InfrastructureType == infrastructureToBuild.InfrastructureType);
@@ -40,7 +44,7 @@ namespace BusinessCore
             return !(infrastructureToBuild.BuildCost > this.Money);
         }
 
-        public bool Build(IInfratructure infrastructureToBuild)
+        public bool Build(IInfrastructure infrastructureToBuild)
         {
             if (!this.CanBuild(infrastructureToBuild))
                 return false;
@@ -50,12 +54,12 @@ namespace BusinessCore
             return true;
         }
 
-        public bool CanUpgradeTechnology(IInfratructure infrastructureToUpgrade)
+        public bool CanUpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
             return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
         }
 
-        public bool UpgradeTechnology(IInfratructure infrastructureToUpgrade)
+        public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Technology);
             if (upgrade == null)
@@ -66,12 +70,12 @@ namespace BusinessCore
             return true;
         }
 
-        public bool CanUpgradeCapacity(IInfratructure infrastructureToUpgrade)
+        public bool CanUpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
             return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
         }
 
-        public bool UpgradeCapacity(IInfratructure infrastructureToUpgrade)
+        public bool UpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Capacity);
             if (upgrade == null)
@@ -82,19 +86,19 @@ namespace BusinessCore
             return true;
         }
 
-        private void Awake()
-        {
-            this._customersManager = new CustomersManager();
-            this.Money = 10000;
-            TimeManager.OnNewMonth += this.OnNewMonth;
-        }
-
         private void OnNewMonth(TimeManager.GameTime time)
         {
-            this._customersManager.Update();
+            foreach (var customersManager in this._networks)
+                customersManager.Value.Update();
             this.Money -= this.MaintenanceCosts;
+            Debug.Log($"Maintenance costs: ${this.MaintenanceCosts} - Money: ${this.Money}");
             if (this.Money < 0)
                 this.GameManager.GameOver();
+        }
+
+        private void OnDestroy()
+        {
+            TimeManager.OnNewMonth -= this.OnNewMonth;
         }
     }
 }
