@@ -14,8 +14,11 @@ namespace Game
         [HideInInspector]
         public MapManager MapManager;
 
-        [SerializeField] private int _heightMap = 20;
-        [SerializeField] private int _widthMap = 20;
+        [SerializeField]
+        private int _heightMap = 20;
+
+        [SerializeField]
+        private int _widthMap = 20;
 
         // Use this for initialization
         private void Awake()
