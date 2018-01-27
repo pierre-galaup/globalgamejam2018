@@ -9,13 +9,19 @@ namespace BusinessCore
         private double _customerSatisfaction = 0;
 
         [SerializeField]
-        private double _marketShare = 0;
+        private double _marketShare = 0.05;
 
         [SerializeField]
         private InfrastructureType _networkType;
 
         [SerializeField]
         private double _subscriptionPrice = 50;
+
+        [SerializeField]
+        private double _marketShareVariation = 1;
+
+        [SerializeField]
+        private double _customerSatisfactionVariation;
 
         /// <summary>
         /// Market share owned by the company. 0 -> 1 range
@@ -54,12 +60,20 @@ namespace BusinessCore
         /// <summary>
         /// Variation of the market share. 1 = no variation. 2 = 100% variation.
         /// </summary>
-        public double MarketShareVariation { get; set; }
+        public double MarketShareVariation
+        {
+            get { return _marketShareVariation; }
+            set { _marketShareVariation = value; }
+        }
 
         /// <summary>
         /// Customers satisfaction variation. 1 = no variation. 2 = 100% variation.
         /// </summary>
-        public double CustomerSatisfactionVariation { get; set; }
+        public double CustomerSatisfactionVariation
+        {
+            get { return _customerSatisfactionVariation; }
+            set { _customerSatisfactionVariation = value; }
+        }
 
         /// <summary>
         /// Define the price of the subscription

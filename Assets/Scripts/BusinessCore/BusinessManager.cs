@@ -22,11 +22,9 @@ namespace BusinessCore
 
         private static int _lastId = 0;
 
-        [SerializeField]
-        private GameManager _gameManager;
+        [SerializeField] private GameManager _gameManager;
 
-        [SerializeField]
-        private double _money = 20000;
+        [SerializeField] private double _money = 20000;
 
         public double Money
         {
@@ -35,6 +33,8 @@ namespace BusinessCore
         }
 
         public double Income { get; private set; }
+
+        public double MarketShare { get; private set; }
 
         public double MaintenanceCosts { get; private set; }
 
@@ -112,15 +112,21 @@ namespace BusinessCore
         private void OnNewMonth(TimeManager.GameTime time)
         {
             this.Income = 0;
+            this.MarketShare = 0;
+            var marketShares = new List<double>();
+            var totalSubscribers = 0;
             foreach (var customersManager in this._networks)
             {
                 customersManager.OnNewMonth();
                 this.Income += customersManager.MonthlyIncome;
-                Debug.Log($"Network: {customersManager.NetworkType} - Subscribers: {customersManager.SubscribersNumber}");
+                marketShares.Add(customersManager.MarketShare);
+                totalSubscribers += customersManager.SubscribersNumber;
             }
+            if (marketShares.Any())
+                this.MarketShare = marketShares.Average();
             this.Money += this.Income;
             this.Money -= this.MaintenanceCosts;
-            Debug.Log($"Account: ${this.Money} - Maintenance costs: ${this.MaintenanceCosts} - Income: ${this.Income}");
+            Debug.Log($"Account: ${this.Money} - Maintenance costs: ${this.MaintenanceCosts} - Income: ${this.Income} - Market Share : {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
             if (this.Money < 0)
                 this._gameManager.GameOver();
         }

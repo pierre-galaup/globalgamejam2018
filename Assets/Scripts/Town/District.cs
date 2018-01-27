@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game;
 using GameTime;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Town
         public int Level = 1;
         public int Peoples = 10000;
 
-        private float _growthRate = 0.05f;
+        private float _growthRate = 0.1f;
         private Coroutine _coroutine;
         private bool _gameIsPaused = false;
         private readonly System.Random _random = new System.Random();
@@ -33,7 +34,7 @@ namespace Town
 
         private void Start()
         {
-            Peoples = _random.Next(6000, 10001);
+            Peoples = _random.Next(2, 9);
             _coroutine = StartCoroutine(GrowthDistrict());
         }
 
@@ -58,29 +59,29 @@ namespace Town
                 }
 
                 float variation = _random.Next(-15, 16) / 1000f;
-                Peoples += (int)(Peoples * (_growthRate + variation));
+                Peoples += (int)Math.Ceiling(Peoples * (_growthRate + variation));
 
-                if (Peoples >= 23000 && Level != 5)
+                if (Peoples >= 500 && Level != 5)
                 {
                     Level = 5;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 19000 && Peoples < 23000 && Level != 4)
+                else if (Peoples >= 100 && Peoples < 500 && Level != 4)
                 {
                     Level = 4;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 16000 && Peoples < 19000 && Level != 3)
+                else if (Peoples >= 30 && Peoples < 100 && Level != 3)
                 {
                     Level = 3;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 14000 && Peoples < 16000 && Level != 2)
+                else if (Peoples >= 12 && Peoples < 30 && Level != 2)
                 {
                     Level = 2;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples < 12000 && Level != 1)
+                else if (Peoples < 12 && Level != 1)
                 {
                     Level = 1;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
