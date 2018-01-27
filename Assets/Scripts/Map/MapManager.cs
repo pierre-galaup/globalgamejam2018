@@ -89,13 +89,14 @@ namespace Map
                 _currentCell.GetComponent<MeshRenderer>().material = _unSelectedMaterial;
             }
 
-            if (!cell.IsConstructible)
-                return;
-
             _currentCell = cell;
             cell.GetComponent<MeshRenderer>().material = _selectedMaterial;
 
-            if (!cell.HaveBuilding) // Si la cellule n'a rien dessus et qu'elle est constructible
+            if (!cell.IsConstructible)
+            {
+                // TODO : Display info sur le quartier
+            }
+            else if (!cell.HaveBuilding) // Si la cellule n'a rien dessus et qu'elle est constructible
             {
                 _buildMenu.SetActive(true);
             }

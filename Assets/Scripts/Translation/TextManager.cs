@@ -37,6 +37,11 @@ namespace Translation
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
         public void ChangeLanguage(string language)
         {
             if (LoadLanguage(language))

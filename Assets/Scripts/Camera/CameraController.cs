@@ -34,18 +34,18 @@ namespace Camera
         [SerializeField]
         private bool _combinedMovement = true;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            float xMove;
+            float xMove = 0;
             float yMove = 0;
             float zMove = 0;
-
-            Vector2 mousePos = Input.mousePosition;
 
             //Move camera if mouse is at the edge of the screen
             if (_moveEnabled)
             {
                 //Move camera if mouse is at the edge of the screen
+#if !UNITY_EDITOR
+                Vector2 mousePos = Input.mousePosition;
                 if (mousePos.x < _horizontalScrollArea)
                 {
                     xMove = -1;
@@ -71,6 +71,7 @@ namespace Camera
                 {
                     zMove = 0;
                 }
+#endif
 
                 //Move camera if wasd or arrow keys are pressed
                 float xAxisValue = Input.GetAxis("Horizontal");
@@ -125,6 +126,15 @@ namespace Camera
             else
             {
                 zMove = 0;
+            }
+
+            if (transform.localPosition.y < 11 && yMove < 0)
+            {
+                yMove = 0;
+            }
+            else if (transform.localPosition.y > 100 && yMove > 0)
+            {
+                yMove = 0;
             }
 
             //move the object
