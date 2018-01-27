@@ -56,27 +56,27 @@ namespace Town
 
                 Peoples += (int)(Peoples * _growthRate);
 
-                if (Peoples >= 120000 && Level != 5)
+                if (Peoples >= 23000 && Level != 5)
                 {
                     Level = 5;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 80000 && Level != 4)
+                else if (Peoples >= 19000 && Peoples < 23000 && Level != 4)
                 {
                     Level = 4;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 50000 && Level != 3)
+                else if (Peoples >= 16000 && Peoples < 19000 && Level != 3)
                 {
                     Level = 3;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples >= 30000 && Level != 2)
+                else if (Peoples >= 14000 && Peoples < 16000 && Level != 2)
                 {
                     Level = 2;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));
                 }
-                else if (Peoples < 30000 && Level != 1)
+                else if (Peoples < 12000 && Level != 1)
                 {
                     Level = 1;
                     UpgradeDistrict(GameManager.Instance.TownExpensionManager.GetBuilding(Level));

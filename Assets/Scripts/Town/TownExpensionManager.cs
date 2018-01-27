@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game;
 using GameTime;
 using Map;
@@ -18,6 +19,8 @@ namespace Town
 
         [SerializeField]
         private List<DisctrictBuilding> _disctricts;
+
+        private readonly List<District> _allDistricts = new List<District>();
 
         private Cell _beginCell;
         private readonly System.Random _random = new System.Random();
@@ -84,7 +87,7 @@ namespace Town
                     return;
                 }
 
-                result = ConstructNewDistrict(cell, _disctricts[0]);
+                result = ConstructNewDistrict(cell, GetBuilding(1));
 
                 if (result)
                     --numberOfBuildingRemaining;
@@ -104,17 +107,18 @@ namespace Town
         private void OnTimerStarted(TimeManager.GameTime time)
         {
             _beginCell = GameManager.Instance.MapManager.GetCell(0, 0);
-            ConstructNewDistrict(_beginCell, _disctricts[0]);
+            ConstructNewDistrict(_beginCell, GetBuilding(1));
         }
 
-        private bool ConstructNewDistrict(Cell cell, DisctrictBuilding disctrict)
+        private bool ConstructNewDistrict(Cell cell, GameObject disctrict)
         {
             if (cell.IsConstructible && !cell.HaveBuilding)
             {
                 GameObject disctrictGameObject = new GameObject("District");
                 disctrictGameObject.AddComponent<District>();
+                _allDistricts.Add(disctrictGameObject.GetComponent<District>());
 
-                GameObject disctrictBuilding = Instantiate(disctrict.Building);
+                GameObject disctrictBuilding = Instantiate(disctrict);
                 disctrictBuilding.transform.SetParent(disctrictGameObject.transform, false);
                 disctrictGameObject.transform.SetParent(cell.transform, false);
 
@@ -127,13 +131,24 @@ namespace Town
             return false;
         }
 
+        public int GetPeoplesNumber()
+        {
+            int number = 0;
+            foreach (District district in _allDistricts)
+            {
+                number += district.Peoples;
+            }
+
+            return number;
+        }
+
         private void ShuffleList<T>(IList<T> list)
         {
             int n = list.Count;
             System.Random rnd = new System.Random();
             while (n > 1)
             {
-                int k = (rnd.Next(0, n) % n);
+                int k = rnd.Next(0, n) % n;
                 n--;
                 T value = list[k];
                 list[k] = list[n];
@@ -143,6 +158,7 @@ namespace Town
 
         public GameObject GetBuilding(int level)
         {
+            ShuffleList(_disctricts);
             foreach (DisctrictBuilding disctrictBuilding in _disctricts)
             {
                 if (disctrictBuilding.Level == level)

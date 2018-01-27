@@ -2846,8 +2846,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _disctricts:
-  - Building: {fileID: 1469883217830488, guid: bc2e4f8b4d13a4c4fb9d9018fb8a3ff5, type: 2}
-    Level: 0
+  - Building: {fileID: 1295661275301840, guid: bc2e4f8b4d13a4c4fb9d9018fb8a3ff5, type: 2}
+    Level: 1
+  - Building: {fileID: 1392736496266000, guid: b2877a52903772e4786608ee08f7e11b, type: 2}
+    Level: 1
+  - Building: {fileID: 1187306278615550, guid: 6021205e54a352349b85e7e6d8c7cbcf, type: 2}
+    Level: 2
+  - Building: {fileID: 1774149081440452, guid: e2530604a1fc21840861f16f3ec65944, type: 2}
+    Level: 2
+  - Building: {fileID: 1931339466373002, guid: 706f85cd385437047affe592ad35a86f, type: 2}
+    Level: 3
+  - Building: {fileID: 1037334584962364, guid: 77d284798c284db45bf95c1e91d5044c, type: 2}
+    Level: 3
+  - Building: {fileID: 1846578182217426, guid: 7e60eed575a82a541a57987f6a0a5fc4, type: 2}
+    Level: 4
+  - Building: {fileID: 1827705053090298, guid: 76e83a6017f2fcd42a9abf59b04672a6, type: 2}
+    Level: 4
+  - Building: {fileID: 1208727400906244, guid: 6a7e7755bef153a4e9b4f2d3bdd70957, type: 2}
+    Level: 5
+  - Building: {fileID: 1678137092998550, guid: 6e644f1cd3ad7a646b4fd6a750ce5518, type: 2}
+    Level: 5
 --- !u!1 &1541082600
 GameObject:
   m_ObjectHideFlags: 0
