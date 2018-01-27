@@ -148,7 +148,15 @@ namespace Map
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
-                // TODO
+                IInfrastructure infrastructure = _currentCell.Building.GetComponent<IInfrastructure>();
+                if (infrastructure == null)
+                    return;
+                if (!GameManager.Instance.BusinessManager.CanUpgradeTechnology(infrastructure))
+                {
+                    Debug.Log("Cannot update");
+                    return;
+                }
+                GameManager.Instance.BusinessManager.UpgradeTechnology(infrastructure);
             }
 
             _infosMenu.SetActive(false);
@@ -160,7 +168,15 @@ namespace Map
         {
             if (_currentCell.IsConstructible && _currentCell.HaveBuilding)
             {
-                // TODO
+                IInfrastructure infrastructure = _currentCell.Building.GetComponent<IInfrastructure>();
+                if (infrastructure == null)
+                    return;
+                if (!GameManager.Instance.BusinessManager.CanUpgradeCapacity(infrastructure))
+                {
+                    Debug.Log("Cannot update");
+                    return;
+                }
+                GameManager.Instance.BusinessManager.UpgradeCapacity(infrastructure);
             }
 
             _infosMenu.SetActive(false);

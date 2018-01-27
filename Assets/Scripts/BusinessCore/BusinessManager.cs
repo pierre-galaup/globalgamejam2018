@@ -31,7 +31,7 @@ namespace BusinessCore
         {
             this._networks[InfrastructureType.WiredInternet] = new CustomersManager(InfrastructureType.WiredInternet);
             this._networks[InfrastructureType.CellularNetwork] = new CustomersManager(InfrastructureType.CellularNetwork);
-            this.Money = 10000;
+            this.Money = double.MaxValue;
             TimeManager.OnNewMonth += this.OnNewMonth;
         }
 
@@ -63,12 +63,12 @@ namespace BusinessCore
 
         public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
+            var previousCost = infrastructureToUpgrade.MaintenanceCost;
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Technology);
             if (upgrade == null)
                 return false;
             this.Money -= upgrade.BuildCost;
-            this.MaintenanceCosts = this.MaintenanceCosts - infrastructureToUpgrade.MaintenanceCost +
-                                    upgrade.MaintenanceCost;
+            this.MaintenanceCosts = this.MaintenanceCosts - previousCost + upgrade.MaintenanceCost;
             return true;
         }
 

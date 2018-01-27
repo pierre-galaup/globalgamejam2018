@@ -74,10 +74,10 @@ namespace BusinessCore.InfrastructureModels
             var upgradeLevel = this.GetNextUpgrade(typeToUpgrade);
             if (upgradeLevel == null)
                 return false;
-            var currentTime = BusinessManager.GameManager.TimeManager.GetGameTime();
-            if (currentTime < upgradeLevel.CreationDate)
-                return false;
-            return BusinessManager.Money - upgradeLevel?.BuildCost < 0;
+            //var currentTime = BusinessManager.GameManager.TimeManager.GetGameTime();
+            //if (currentTime < upgradeLevel.CreationDate)
+            //    return false;
+            return BusinessManager.Money - upgradeLevel?.BuildCost > 0;
         }
 
         public virtual IInfrastructureLevel Upgrade(InfrastructureLevelType typeToUpgrade)
