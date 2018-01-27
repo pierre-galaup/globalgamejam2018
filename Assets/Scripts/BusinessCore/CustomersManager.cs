@@ -1,13 +1,24 @@
-﻿namespace BusinessCore
+﻿using Game;
+using UnityEngine;
+
+namespace BusinessCore
 {
-    public class CustomersManager
+    public class CustomersManager : MonoBehaviour
     {
-        private double _customerSatisfaction;
-        private double _marketShare;
+        [SerializeField]
+        private double _customerSatisfaction = 0;
+
+        [SerializeField]
+        private double _marketShare = 0;
+
+        [SerializeField]
         private InfrastructureType _networkType;
 
+        [SerializeField]
+        private double _subscriptionPrice = 50;
+
         /// <summary>
-        /// Market share owned by the company
+        /// Market share owned by the company. 0 -> 1 range
         /// </summary>
         public double MarketShare
         {
@@ -19,6 +30,11 @@
                 _marketShare = value;
             }
         }
+
+        /// <summary>
+        /// Number of subscribers
+        /// </summary>
+        public int SubscribersNumber { get; private set; }
 
         /// <summary>
         /// Customers satisfaction
@@ -48,20 +64,29 @@
         /// <summary>
         /// Define the price of the subscription
         /// </summary>
-        public double SubscriptionPrice { get; set; }
-
-        public CustomersManager(InfrastructureType networkType)
+        public double SubscriptionPrice
         {
-            this._networkType = networkType;
+            get { return _subscriptionPrice; }
+            set { _subscriptionPrice = value; }
+        }
+
+        public double MonthlyIncome { get; private set; }
+
+        public InfrastructureType NetworkType
+        {
+            get { return _networkType; }
+            set { _networkType = value; }
         }
 
         /// <summary>
         /// Recalculate market share value according to variation. Should be called each month in game.
         /// </summary>
-        public void Update()
+        public void OnNewMonth()
         {
-            this.MarketShare *= this.MarketShareVariation;
             this.CustomerSatisfaction *= this.CustomerSatisfactionVariation;
+            this.MarketShare *= this.MarketShareVariation;
+            this.SubscribersNumber = (int)(GameManager.Instance.TownExpensionManager.GetPeoplesNumber() * this.MarketShare);
+            this.MonthlyIncome = this.SubscribersNumber * this.SubscriptionPrice;
         }
     }
 }
