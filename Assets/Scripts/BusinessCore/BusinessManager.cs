@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game;
+using GameTime;
 using UnityEngine;
 
 namespace BusinessCore
@@ -85,9 +86,10 @@ namespace BusinessCore
         {
             this._customersManager = new CustomersManager();
             this.Money = 10000;
+            TimeManager.OnNewMonth += this.OnNewMonth;
         }
 
-        private void OnNewMonth()
+        private void OnNewMonth(TimeManager.GameTime time)
         {
             this._customersManager.Update();
             this.Money -= this.MaintenanceCosts;
