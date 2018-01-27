@@ -15,6 +15,9 @@ namespace Game
         [HideInInspector]
         public MapManager MapManager;
 
+        [HideInInspector]
+        public BusinessCore.BusinessManager BusinessManager;
+
         [SerializeField]
         private int _heightMap = 20;
 
@@ -29,6 +32,7 @@ namespace Game
 
             TimeManager = transform.parent.GetComponentInChildren<TimeManager>();
             MapManager = transform.parent.GetComponentInChildren<MapManager>();
+            BusinessManager = transform.parent.GetComponentInChildren<BusinessCore.BusinessManager>();
         }
 
         private void Start()

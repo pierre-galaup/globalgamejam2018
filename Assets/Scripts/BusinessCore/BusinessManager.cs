@@ -17,12 +17,8 @@ namespace BusinessCore
         /// List of insfrastructures built in the city
         /// </summary>
         private readonly List<IInfratructure> _infrastructuresList = new List<IInfratructure>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private CustomersManager _customersManager;
-
+        private readonly Dictionary<InfrastructureType, CustomersManager> _networks = new Dictionary<InfrastructureType, CustomersManager>();
+        
         private static int _lastId = 0;
 
         public GameManager GameManager = GameManager.Instance;
@@ -30,6 +26,14 @@ namespace BusinessCore
         public double Money { get; private set; }
 
         public double MaintenanceCosts { get; private set; }
+
+        private void Awake()
+        {
+            this._networks[InfrastructureType.WiredInternet] = new CustomersManager(InfrastructureType.WiredInternet);
+            this._networks[InfrastructureType.CellularNetwork] = new CustomersManager(InfrastructureType.CellularNetwork);
+            this.Money = 10000;
+            TimeManager.OnNewMonth += this.OnNewMonth;
+        }
 
         public bool CanBuild(IInfratructure infrastructureToBuild)
         {
@@ -82,17 +86,12 @@ namespace BusinessCore
             return true;
         }
 
-        private void Awake()
-        {
-            this._customersManager = new CustomersManager();
-            this.Money = 10000;
-            TimeManager.OnNewMonth += this.OnNewMonth;
-        }
-
         private void OnNewMonth(TimeManager.GameTime time)
         {
-            this._customersManager.Update();
+            foreach (var customersManager in this._networks)
+                customersManager.Value.Update();
             this.Money -= this.MaintenanceCosts;
+            Debug.Log($"Maintenance costs: ${this.MaintenanceCosts} - Money: ${this.Money}");
             if (this.Money < 0)
                 this.GameManager.GameOver();
         }
