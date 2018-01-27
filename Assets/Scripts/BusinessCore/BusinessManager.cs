@@ -37,6 +37,8 @@ namespace BusinessCore
 
         public bool CanBuild(IInfrastructure infrastructureToBuild)
         {
+            if (infrastructureToBuild == null)
+                return false;
             var infrastructureCount =
                 this._infrastructuresList.Count(e => e.InfrastructureType == infrastructureToBuild.InfrastructureType);
             if (infrastructureCount >= infrastructureToBuild.Limit)
