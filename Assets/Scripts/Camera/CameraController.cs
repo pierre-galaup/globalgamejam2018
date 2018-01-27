@@ -5,9 +5,11 @@ namespace Camera
     public class CameraController : MonoBehaviour
     {
         [SerializeField]
+        // ReSharper disable once NotAccessedField.Local
         private float _verticalScrollArea = 10f;
 
         [SerializeField]
+        // ReSharper disable once NotAccessedField.Local
         private float _horizontalScrollArea = 10f;
 
         [SerializeField]

@@ -35,5 +35,14 @@ msgstr "Centrale internet"
 msgid "Phone central"
 msgstr "Centrale téléphonique"
 
+msgid "Technology upgrade"
+msgstr "Augmentation de la technologie"
+
+msgid "Capacity upgrade"
+msgstr "Augmentation de la capacité"
+
+msgid "Destroy"
+msgstr "Détruire"
+
 msgid ""
 msgstr ""

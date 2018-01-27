@@ -37,7 +37,6 @@ public class UnityMainThreadDispatcher : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
         if (_instance != null)
         {
             Destroy(gameObject);
