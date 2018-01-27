@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 4176486645180838}
   - component: {fileID: 33292426230374430}
   - component: {fileID: 23544763376851922}
+  - component: {fileID: 114458342463611004}
   m_Layer: 0
   m_Name: NRO
   m_TagString: Untagged
@@ -1272,3 +1273,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114458342463611004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755645457551556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f267f6a277a152948a462a3e330ad8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: MDF
+  _description: Main Distribution Frame
+  _limit: 50
+  _infrastructureType: 0

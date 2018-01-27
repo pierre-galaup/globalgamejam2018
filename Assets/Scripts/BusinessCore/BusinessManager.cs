@@ -17,21 +17,30 @@ namespace BusinessCore
         /// List of insfrastructures built in the city
         /// </summary>
         private readonly List<IInfrastructure> _infrastructuresList = new List<IInfrastructure>();
-        private readonly Dictionary<InfrastructureType, CustomersManager> _networks = new Dictionary<InfrastructureType, CustomersManager>();
-        
+
+        private readonly Dictionary<InfrastructureType, CustomersManager> _networks =
+            new Dictionary<InfrastructureType, CustomersManager>();
+
         private static int _lastId = 0;
 
         public GameManager GameManager = GameManager.Instance;
 
-        public double Money { get; private set; }
+        [SerializeField]
+        private double _money = 20000;
+
+        public double Money
+        {
+            get { return _money; }
+            private set { _money = value; }
+        }
 
         public double MaintenanceCosts { get; private set; }
 
         private void Awake()
         {
             this._networks[InfrastructureType.WiredInternet] = new CustomersManager(InfrastructureType.WiredInternet);
-            this._networks[InfrastructureType.CellularNetwork] = new CustomersManager(InfrastructureType.CellularNetwork);
-            this.Money = double.MaxValue;
+            this._networks[InfrastructureType.CellularNetwork] =
+                new CustomersManager(InfrastructureType.CellularNetwork);
             TimeManager.OnNewMonth += this.OnNewMonth;
         }
 
@@ -40,7 +49,8 @@ namespace BusinessCore
             if (infrastructureToBuild == null)
                 return false;
             var infrastructureCount =
-                this._infrastructuresList.Count(e => e.InfrastructureType == infrastructureToBuild.InfrastructureType);
+                this._infrastructuresList.Count(e => e.Name == infrastructureToBuild.Name &&
+                                                     e.InfrastructureType == infrastructureToBuild.InfrastructureType);
             if (infrastructureCount >= infrastructureToBuild.Limit)
                 return false;
             return !(infrastructureToBuild.BuildCost > this.Money);
@@ -58,33 +68,37 @@ namespace BusinessCore
 
         public bool CanUpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
-            return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
+            return infrastructureToUpgrade != null &&
+                   infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
         }
 
         public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
-            var previousCost = infrastructureToUpgrade.MaintenanceCost;
+            var previousTech = infrastructureToUpgrade.GetCurrentLevel(InfrastructureLevelType.Technology);
+            if (previousTech == null)
+                return false;
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Technology);
             if (upgrade == null)
                 return false;
             this.Money -= upgrade.BuildCost;
-            this.MaintenanceCosts = this.MaintenanceCosts - previousCost + upgrade.MaintenanceCost;
+            this.MaintenanceCosts = this.MaintenanceCosts - previousTech.MaintenanceCost + upgrade.MaintenanceCost;
             return true;
         }
 
         public bool CanUpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
-            return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
+            return infrastructureToUpgrade != null &&
+                   infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
         }
 
         public bool UpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
+            var previousTech = infrastructureToUpgrade.GetCurrentLevel(InfrastructureLevelType.Capacity);
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Capacity);
             if (upgrade == null)
                 return false;
             this.Money -= upgrade.BuildCost;
-            this.MaintenanceCosts = this.MaintenanceCosts - infrastructureToUpgrade.MaintenanceCost +
-                                    upgrade.MaintenanceCost;
+            this.MaintenanceCosts = this.MaintenanceCosts - previousTech.MaintenanceCost + upgrade.MaintenanceCost;
             return true;
         }
 

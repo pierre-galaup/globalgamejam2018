@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 4908287863132202}
   - component: {fileID: 33145133655150718}
   - component: {fileID: 23580305170020932}
+  - component: {fileID: 114330845876344490}
   m_Layer: 0
   m_Name: PhoneFactory
   m_TagString: Untagged
@@ -2270,3 +2271,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114330845876344490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1503351924333412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf4e28f02af9ac47a17d7b2b7f66c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Central
+  _description: Central node for cellular network
+  _limit: 1
+  _infrastructureType: 1

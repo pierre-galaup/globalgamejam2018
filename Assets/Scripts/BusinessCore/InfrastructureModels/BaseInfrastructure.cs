@@ -36,6 +36,11 @@ namespace BusinessCore.InfrastructureModels
             protected set;
         }
 
+        public IInfrastructureLevel GetCurrentLevel(InfrastructureLevelType infrastructureLevelType)
+        {
+            return !this.CurrentLevelsDict.ContainsKey(infrastructureLevelType) ? null : this.CurrentLevelsDict[infrastructureLevelType];
+        }
+
         public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; protected set; }
 
         public IEnumerable<IInfrastructureLevel> CurrentLevels => CurrentLevelsDict.Values;

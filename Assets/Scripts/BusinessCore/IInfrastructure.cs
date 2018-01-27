@@ -61,6 +61,13 @@ namespace BusinessCore
         IEnumerable<IInfrastructureLevel> CurrentLevels { get; }
 
         /// <summary>
+        /// Return the current level of the given infrastructure type
+        /// </summary>
+        /// <param name="infrastructureLevelType"></param>
+        /// <returns></returns>
+        IInfrastructureLevel GetCurrentLevel(InfrastructureLevelType infrastructureLevelType);
+
+        /// <summary>
         /// List of available levels.
         /// We need a List here, because it MUST be ordered and IEnumerable do not garantie that it is ordered.
         /// </summary>
