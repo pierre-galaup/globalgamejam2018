@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BusinessCore.InfrastructureModels.WiredInternetCentral
+namespace BusinessCore.InfrastructureModels.CellularCentral
 {
     public class Central : BaseInfrastructure
     {
@@ -9,13 +9,13 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
         private string _name = "Central";
 
         [SerializeField]
-        private string _description = "Central node for wired internet network";
+        private string _description = "Central node for cellular network";
 
         [SerializeField]
         private int _limit = 1;
 
         [SerializeField]
-        private InfrastructureType _infrastructureType = InfrastructureType.WiredInternet;
+        private InfrastructureType _infrastructureType = InfrastructureType.CellularNetwork;
 
         public override string Name
         {
@@ -45,8 +45,8 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
         {
             var technologies = new List<IInfrastructureLevel>
             {
-                new Upgrades.Speed1200Bits(),
-                new Upgrades.Speed56K()
+                new Upgrades.OneG(),
+                new Upgrades.TwoG()
             };
             this.Upgrades[InfrastructureLevelType.Technology] = technologies;
 

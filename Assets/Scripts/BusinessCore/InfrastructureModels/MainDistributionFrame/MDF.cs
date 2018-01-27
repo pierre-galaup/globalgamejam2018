@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BusinessCore.InfrastructureModels.WiredInternetCentral
+namespace BusinessCore.InfrastructureModels.MainDistributionFrame
 {
-    public class Central : BaseInfrastructure
+    public class MDF : BaseInfrastructure
     {
-        [SerializeField]
-        private string _name = "Central";
+        private Dictionary<InfrastructureLevelType, IInfrastructureLevel> _currentLevels;
+        private BusinessManager _businessManager;
 
         [SerializeField]
-        private string _description = "Central node for wired internet network";
+        private string _name = "MDF";
 
         [SerializeField]
-        private int _limit = 1;
+        private string _description = "Main Distribution Frame";
+
+        [SerializeField]
+        private int _limit = 50;
 
         [SerializeField]
         private InfrastructureType _infrastructureType = InfrastructureType.WiredInternet;
@@ -56,6 +59,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
                 new Upgrades.LevelTwo()
             };
             this.Upgrades[InfrastructureLevelType.Capacity] = capacity;
+
         }
     }
 }

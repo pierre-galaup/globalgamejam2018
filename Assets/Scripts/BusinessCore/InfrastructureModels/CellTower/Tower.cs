@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BusinessCore.InfrastructureModels.WiredInternetCentral
+namespace BusinessCore.InfrastructureModels.CellTower
 {
-    public class Central : BaseInfrastructure
+    public class Tower : BaseInfrastructure
     {
         [SerializeField]
-        private string _name = "Central";
+        private string _name = "Tower";
 
         [SerializeField]
-        private string _description = "Central node for wired internet network";
+        private string _description = "Tower for cellular network";
 
         [SerializeField]
-        private int _limit = 1;
+        private int _limit = 100;
 
         [SerializeField]
-        private InfrastructureType _infrastructureType = InfrastructureType.WiredInternet;
+        private InfrastructureType _infrastructureType = InfrastructureType.CellularNetwork;
 
         public override string Name
         {
@@ -45,8 +45,8 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
         {
             var technologies = new List<IInfrastructureLevel>
             {
-                new Upgrades.Speed1200Bits(),
-                new Upgrades.Speed56K()
+                new Upgrades.OneG(),
+                new Upgrades.TwoG()
             };
             this.Upgrades[InfrastructureLevelType.Technology] = technologies;
 
