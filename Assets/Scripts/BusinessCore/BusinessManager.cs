@@ -95,5 +95,10 @@ namespace BusinessCore
             if (this.Money < 0)
                 this.GameManager.GameOver();
         }
+
+        private void OnDestroy()
+        {
+            TimeManager.OnNewMonth -= this.OnNewMonth;
+        }
     }
 }
