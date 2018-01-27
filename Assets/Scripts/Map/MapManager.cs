@@ -124,13 +124,13 @@ namespace Map
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)
             {
                 GameObject infrastructure = Instantiate(building);
-                if (!GameManager.Instance.BusinessManager.CanBuild(infrastructure.GetComponent<IInfratructure>()))
+                if (!GameManager.Instance.BusinessManager.CanBuild(infrastructure.GetComponent<IInfrastructure>()))
                 {
                     Debug.Log("Cannot build");
                     Destroy(infrastructure);
                     return;
                 }
-                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfratructure>());
+                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>());
                 infrastructure.transform.SetParent(_currentCell.transform, false);
 
                 _currentCell.Building = infrastructure;

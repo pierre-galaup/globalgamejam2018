@@ -16,7 +16,7 @@ namespace BusinessCore
         /// <summary>
         /// List of insfrastructures built in the city
         /// </summary>
-        private readonly List<IInfratructure> _infrastructuresList = new List<IInfratructure>();
+        private readonly List<IInfrastructure> _infrastructuresList = new List<IInfrastructure>();
         private readonly Dictionary<InfrastructureType, CustomersManager> _networks = new Dictionary<InfrastructureType, CustomersManager>();
         
         private static int _lastId = 0;
@@ -35,7 +35,7 @@ namespace BusinessCore
             TimeManager.OnNewMonth += this.OnNewMonth;
         }
 
-        public bool CanBuild(IInfratructure infrastructureToBuild)
+        public bool CanBuild(IInfrastructure infrastructureToBuild)
         {
             var infrastructureCount =
                 this._infrastructuresList.Count(e => e.InfrastructureType == infrastructureToBuild.InfrastructureType);
@@ -44,7 +44,7 @@ namespace BusinessCore
             return !(infrastructureToBuild.BuildCost > this.Money);
         }
 
-        public bool Build(IInfratructure infrastructureToBuild)
+        public bool Build(IInfrastructure infrastructureToBuild)
         {
             if (!this.CanBuild(infrastructureToBuild))
                 return false;
@@ -54,12 +54,12 @@ namespace BusinessCore
             return true;
         }
 
-        public bool CanUpgradeTechnology(IInfratructure infrastructureToUpgrade)
+        public bool CanUpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
             return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
         }
 
-        public bool UpgradeTechnology(IInfratructure infrastructureToUpgrade)
+        public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade)
         {
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Technology);
             if (upgrade == null)
@@ -70,12 +70,12 @@ namespace BusinessCore
             return true;
         }
 
-        public bool CanUpgradeCapacity(IInfratructure infrastructureToUpgrade)
+        public bool CanUpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
             return infrastructureToUpgrade != null && infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
         }
 
-        public bool UpgradeCapacity(IInfratructure infrastructureToUpgrade)
+        public bool UpgradeCapacity(IInfrastructure infrastructureToUpgrade)
         {
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Capacity);
             if (upgrade == null)
