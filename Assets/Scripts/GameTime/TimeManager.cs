@@ -127,7 +127,7 @@ namespace GameTime
                 if (_isPaused)
                     continue;
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1 * Time.timeScale);
                 _timer += 1;
 
                 if ((int)_timer % _realSecondsForOneMonth == 0)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Game;
@@ -10,6 +11,10 @@ namespace Town
 {
     public class TownExpensionManager : MonoBehaviour
     {
+        public delegate void TotalPeopleEvent(int peoples);
+
+        public static event TotalPeopleEvent OnNewPeople;
+
         [Serializable]
         public class DisctrictBuilding
         {
@@ -102,12 +107,24 @@ namespace Town
         private void OnDestroy()
         {
             TimeManager.OnTimerStarted -= OnTimerStarted;
+            TimeManager.OnNewMonth -= OnNewMonth;
         }
 
         private void OnTimerStarted(TimeManager.GameTime time)
         {
             _beginCell = GameManager.Instance.MapManager.GetCell(0, 0);
             ConstructNewDistrict(_beginCell, GetBuilding(1));
+
+            StartCoroutine(SendEvent());
+        }
+
+        private IEnumerator SendEvent()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(2 * Time.timeScale);
+                OnNewPeople?.Invoke(GetPeoplesNumber());
+            }
         }
 
         private bool ConstructNewDistrict(Cell cell, GameObject disctrict)
