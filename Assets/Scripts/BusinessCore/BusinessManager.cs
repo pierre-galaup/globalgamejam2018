@@ -110,7 +110,10 @@ namespace BusinessCore
             customersManager.NetworkType = infrastructureToBuild.InfrastructureType;
 
             if (this._networks.All(e => e.NetworkType != infrastructureToBuild.InfrastructureType))
+            {
                 this._networks.Add(customersManager); // We have a new network here
+            }
+        
 
             var network = this._networks.FirstOrDefault(e => e.NetworkType == infrastructureToBuild.InfrastructureType);
             if (!network)
@@ -160,22 +163,24 @@ namespace BusinessCore
             return true;
         }
 
+        public IEnumerable<CustomersManager> Networks => this._networks;
+
         private void OnNewMonth(TimeManager.GameTime time)
         {
-            this.Income = 0;
-            this.MarketShare = 0;
+            var income = 0.0;
             var marketShares = new List<double>();
             var totalSubscribers = 0;
             foreach (var customersManager in this._networks)
             {
                 customersManager.OnNewMonth();
-                this.Income += customersManager.MonthlyIncome;
+                income += customersManager.MonthlyIncome;
                 marketShares.Add(customersManager.MarketShare);
                 totalSubscribers += customersManager.SubscribersNumber;
                 Debug.Log($"Network: {customersManager.NetworkType} - Customer Satisfaction Variation {customersManager.CustomerSatisfactionVariation} - Market variation: {customersManager.MarketShareVariation} - Satisfaction: {customersManager.CustomerSatisfaction} (+/- {customersManager.CustomerSatisfactionVariation})");
             }
             if (marketShares.Any())
                 this.MarketShare = marketShares.Average();
+            this.Income = income;
             this.Money += this.Income;
             this.Money =  this.Money - (this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers);
             Debug.Log($"Account: {this.Money}€ - Maintenance costs: {(this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers)}€ - Income: {this.Income}€ - Market Share: {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
