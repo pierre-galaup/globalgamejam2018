@@ -6,7 +6,7 @@ namespace BusinessCore.InfrastructureModels.CellTower
     public class Tower : BaseInfrastructure
     {
         [SerializeField]
-        private string _name = "Tower";
+        private string _name = "Cell tower";
 
         [SerializeField]
         private string _description = "Tower for cellular network";

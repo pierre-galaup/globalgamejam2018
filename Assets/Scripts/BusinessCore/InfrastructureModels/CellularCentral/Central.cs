@@ -6,7 +6,7 @@ namespace BusinessCore.InfrastructureModels.CellularCentral
     public class Central : BaseInfrastructure
     {
         [SerializeField]
-        private string _name = "Central";
+        private string _name = "Phone central";
 
         [SerializeField]
         private string _description = "Central node for cellular network";

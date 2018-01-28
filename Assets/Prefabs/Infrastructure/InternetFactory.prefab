@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43870662a450447da0fe5cdc40f900aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Central
+  _name: Internet central
   _description: Central node for wired internet network
   _limit: 1
   _infrastructureType: 0

@@ -1939,7 +1939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb321ea7e863f7c47ad07f6d0f621e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Tower
+  _name: Cell tower
   _description: Tower for cellular network
   _limit: 100
   _infrastructureType: 1

@@ -6,7 +6,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral
     public class Central : BaseInfrastructure
     {
         [SerializeField]
-        private string _name = "Central";
+        private string _name = "Internet central";
 
         [SerializeField]
         private string _description = "Central node for wired internet network";

@@ -146,7 +146,7 @@ namespace Map
                 IInfrastructure infrastructure = cell.Building.GetComponent<IInfrastructure>();
 
                 _infoMaintenanceCostText.text = infrastructure.MaintenanceCost.ToString(CultureInfo.InvariantCulture);
-                _infoNameText.text = infrastructure.Name;
+                _infoNameText.GetComponent<TranslateText>().SetText(infrastructure.Name);
                 _infoTypeText.GetComponent<TranslateText>().SetText(infrastructure.InfrastructureType == InfrastructureType.CellularNetwork ? "Cellular" : "Wired");
 
                 _infosMenu.SetActive(true);
