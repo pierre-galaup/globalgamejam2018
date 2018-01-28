@@ -9,37 +9,28 @@ namespace BusinessCore.InfrastructureModels
     {
         protected Dictionary<InfrastructureLevelType, IInfrastructureLevel> CurrentLevelsDict =
             new Dictionary<InfrastructureLevelType, IInfrastructureLevel>();
+
         protected BusinessManager BusinessManager;
 
         public int Id { get; protected set; }
 
-        public virtual string Name
-        {
-            get;
-            protected set;
-        }
+        public virtual string Name { get; protected set; }
 
-        public virtual string Description
-        {
-            get;
-            protected set;
-        }
+        public virtual string Description { get; protected set; }
 
-        public virtual int Limit
-        {
-            get;
-            protected set;
-        }
+        public virtual int Limit { get; protected set; }
 
-        public virtual InfrastructureType InfrastructureType
-        {
-            get;
-            protected set;
-        }
+        public virtual bool IsCentral { get; protected set; }
+
+        public virtual int Range { get; protected set; }
+
+        public virtual InfrastructureType InfrastructureType { get; protected set; }
 
         public IInfrastructureLevel GetCurrentLevel(InfrastructureLevelType infrastructureLevelType)
         {
-            return !this.CurrentLevelsDict.ContainsKey(infrastructureLevelType) ? null : this.CurrentLevelsDict[infrastructureLevelType];
+            return !this.CurrentLevelsDict.ContainsKey(infrastructureLevelType)
+                ? null
+                : this.CurrentLevelsDict[infrastructureLevelType];
         }
 
         public Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>> Upgrades { get; protected set; }

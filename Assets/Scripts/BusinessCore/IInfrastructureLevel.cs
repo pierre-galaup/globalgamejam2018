@@ -40,11 +40,6 @@ namespace BusinessCore
         double SatisfactionProvided { get; }
 
         /// <summary>
-        /// Range of satisfaction
-        /// </summary>
-        double SatisfactionRange { get; }
-
-        /// <summary>
         /// In which year this item is available
         /// </summary>
         TimeManager.GameTime CreationDate { get; }

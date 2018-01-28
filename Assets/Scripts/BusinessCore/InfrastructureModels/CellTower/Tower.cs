@@ -17,6 +17,12 @@ namespace BusinessCore.InfrastructureModels.CellTower
         [SerializeField]
         private InfrastructureType _infrastructureType = InfrastructureType.CellularNetwork;
 
+        [SerializeField]
+        private int _range = 6;
+
+        [SerializeField]
+        private bool _isCentral = false;
+
         public override string Name
         {
             get { return _name; }
@@ -33,6 +39,18 @@ namespace BusinessCore.InfrastructureModels.CellTower
         {
             get { return _limit; }
             protected set { _limit = value; }
+        }
+
+        public override int Range
+        {
+            get { return _range; }
+            protected set { _range = value; }
+        }
+
+        public override bool IsCentral
+        {
+            get { return _isCentral; }
+            protected set { _isCentral = value; }
         }
 
         public override InfrastructureType InfrastructureType

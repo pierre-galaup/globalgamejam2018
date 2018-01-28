@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Game;
 using GameTime;
 using JetBrains.Annotations;
+using Map;
 using UnityEngine;
 
 namespace BusinessCore
@@ -32,6 +34,7 @@ namespace BusinessCore
         private double _income;
         private double _marketShare;
         private double _maintenanceCosts;
+        private double _customersSatisfaction;
 
         public double Money
         {
@@ -77,6 +80,17 @@ namespace BusinessCore
             }
         }
 
+        public double CustomersSatisfaction
+        {
+            get { return _customersSatisfaction; }
+            set
+            {
+                if (value.Equals(_customersSatisfaction)) return;
+                _customersSatisfaction = value;
+                OnPropertyChanged();
+            }
+        }
+
         private void Awake()
         {
             TimeManager.OnNewMonth += this.OnNewMonth;
@@ -99,7 +113,7 @@ namespace BusinessCore
             return !(infrastructureToBuild.BuildCost > this.Money);
         }
 
-        public bool Build(IInfrastructure infrastructureToBuild)
+        public bool Build(IInfrastructure infrastructureToBuild, Cell currentCell)
         {
             if (!this.CanBuild(infrastructureToBuild))
                 return false;
@@ -109,9 +123,10 @@ namespace BusinessCore
             var customersManager = this.gameObject.AddComponent<CustomersManager>();
             customersManager.NetworkType = infrastructureToBuild.InfrastructureType;
 
-            if (this._networks.All(e => e.NetworkType != infrastructureToBuild.InfrastructureType))
+            if (this._networks.All(e => e.NetworkType != infrastructureToBuild.InfrastructureType) && infrastructureToBuild.IsCentral)
             {
                 this._networks.Add(customersManager); // We have a new network here
+                customersManager.PropertyChanged += CustomersManagerOnPropertyChanged;
             }
         
 
@@ -124,7 +139,17 @@ namespace BusinessCore
                 network.CustomerSatisfactionVariation *= level.SatisfactionProvided;
             }
 
+            var cells = GameManager.Instance.MapManager.GetCellInRange(currentCell, infrastructureToBuild.Range);
+            foreach (var cell in cells)
+                cell.InNetworkRange = true;
             return true;
+        }
+
+        private void CustomersManagerOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+            if (propertyChangedEventArgs.PropertyName == "CustomerSatisfaction")
+                this.CustomersSatisfaction = this.Networks.Average(e => e.CustomerSatisfaction);
+
         }
 
         public bool CanUpgradeTechnology(IInfrastructure infrastructureToUpgrade)
@@ -133,7 +158,7 @@ namespace BusinessCore
                    infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Technology);
         }
 
-        public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade)
+        public bool UpgradeTechnology(IInfrastructure infrastructureToUpgrade, Cell currentCell)
         {
             var previousTech = infrastructureToUpgrade.GetCurrentLevel(InfrastructureLevelType.Technology);
             if (previousTech == null)
@@ -152,7 +177,7 @@ namespace BusinessCore
                    infrastructureToUpgrade.CanUpgrade(InfrastructureLevelType.Capacity);
         }
 
-        public bool UpgradeCapacity(IInfrastructure infrastructureToUpgrade)
+        public bool UpgradeCapacity(IInfrastructure infrastructureToUpgrade, Cell currentCell)
         {
             var previousTech = infrastructureToUpgrade.GetCurrentLevel(InfrastructureLevelType.Capacity);
             var upgrade = infrastructureToUpgrade?.Upgrade(InfrastructureLevelType.Capacity);
@@ -181,8 +206,7 @@ namespace BusinessCore
             if (marketShares.Any())
                 this.MarketShare = marketShares.Average();
             this.Income = income;
-            this.Money += this.Income;
-            this.Money =  this.Money - (this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers);
+            this.Money += this.Income - (this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers);
             Debug.Log($"Account: {this.Money}€ - Maintenance costs: {(this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers)}€ - Income: {this.Income}€ - Market Share: {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
             if (this.Money < 0)
                 this._gameManager.GameOver();

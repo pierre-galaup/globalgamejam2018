@@ -11,7 +11,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
         public double BuildCost { get; }
         public double MaintenanceCost { get; }
         public double SatisfactionProvided { get; }
-        public double SatisfactionRange { get; }
+        public int Range { get; }
         public TimeManager.GameTime CreationDate { get; }
         public TimeManager.GameTime ExpirationDate { get; }
 
@@ -24,7 +24,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
             this.BuildCost = 20000;
             this.MaintenanceCost = 1000;
             this.SatisfactionProvided = 1.15;
-            this.SatisfactionRange = 55;
+            this.Range = 55;
             this.CreationDate = new TimeManager.GameTime() { Months = 0, Years = 1996 };
             this.ExpirationDate = new TimeManager.GameTime() { Months = 0, Years = 2000 };
         }

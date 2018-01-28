@@ -11,7 +11,7 @@ namespace BusinessCore.InfrastructureModels.CellularCentral.Upgrades
         public double BuildCost { get; }
         public double MaintenanceCost { get; }
         public double SatisfactionProvided { get; }
-        public double SatisfactionRange { get; }
+        public int Range { get; }
         public TimeManager.GameTime CreationDate { get; }
         public TimeManager.GameTime ExpirationDate { get; }
 
@@ -24,7 +24,7 @@ namespace BusinessCore.InfrastructureModels.CellularCentral.Upgrades
             this.BuildCost = 1500;
             this.MaintenanceCost = 40;
             this.SatisfactionProvided = 1.40;
-            this.SatisfactionRange = 50;
+            this.Range = 50;
             this.CreationDate = new TimeManager.GameTime { Months = 0, Years = 1980 };
             this.ExpirationDate = new TimeManager.GameTime { Months = 0, Years = 1990 };
         }

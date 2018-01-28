@@ -2286,3 +2286,4 @@ MonoBehaviour:
   _description: Central node for cellular network
   _limit: 1
   _infrastructureType: 1
+  _isCentral: 1

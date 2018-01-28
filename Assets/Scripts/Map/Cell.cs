@@ -11,6 +11,7 @@ namespace Map
 
         public bool IsConstructible = true;
         public bool HaveBuilding = false;
+        public bool InNetworkRange = false;
 
         public GameObject Building = null;
 

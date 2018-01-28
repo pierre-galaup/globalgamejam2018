@@ -2,6 +2,7 @@
 using System.Collections;
 using Game;
 using GameTime;
+using Map;
 using UnityEngine;
 
 namespace Town
@@ -15,6 +16,7 @@ namespace Town
         private Coroutine _coroutine;
         private bool _gameIsPaused = false;
         private readonly System.Random _random = new System.Random();
+        private Cell _cell;
 
         private void Awake()
         {
@@ -35,6 +37,7 @@ namespace Town
         private void Start()
         {
             Peoples = _random.Next(2, 9);
+            _cell = transform.parent.GetComponent<Cell>();
             _coroutine = StartCoroutine(GrowthDistrict());
         }
 
@@ -59,7 +62,14 @@ namespace Town
                 }
 
                 float variation = _random.Next(-15, 16) / 1000f;
-                Peoples += (int)Math.Ceiling(Peoples * (_growthRate + variation));
+
+                if (_cell != null && _cell.InNetworkRange)
+                    Peoples += (int)Math.Ceiling(Peoples * (_growthRate + variation));
+                else
+                    Peoples += (int)Math.Ceiling(Peoples * (_growthRate + variation) * 0.02);
+
+                if (!_cell.InNetworkRange && Peoples >= 12)
+                    Peoples = 11;
 
                 if (Peoples >= 500 && Level != 5)
                 {

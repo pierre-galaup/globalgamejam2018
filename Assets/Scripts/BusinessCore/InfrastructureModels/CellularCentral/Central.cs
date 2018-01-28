@@ -17,6 +17,12 @@ namespace BusinessCore.InfrastructureModels.CellularCentral
         [SerializeField]
         private InfrastructureType _infrastructureType = InfrastructureType.CellularNetwork;
 
+        [SerializeField]
+        private bool _isCentral = true;
+
+        [SerializeField]
+        private int _range = 0;
+
         public override string Name
         {
             get { return _name; }
@@ -35,10 +41,22 @@ namespace BusinessCore.InfrastructureModels.CellularCentral
             protected set { _limit = value; }
         }
 
+        public override int Range
+        {
+            get { return _range; }
+            protected set { _range = value; }
+        }
+
         public override InfrastructureType InfrastructureType
         {
             get { return _infrastructureType; }
             protected set { _infrastructureType = value; }
+        }
+
+        public override bool IsCentral
+        {
+            get { return _isCentral; }
+            protected set { _isCentral = value; }
         }
 
         protected override void InitializeUpgrades()

@@ -180,6 +180,21 @@ namespace Map
             }
         }
 
+        public IEnumerable<Cell> GetCellInRange(Cell centerCell, int range)
+        {
+            List<Cell> cells = new List<Cell>();
+
+            var cellsFound = Physics.OverlapSphere(centerCell.transform.position, range * 5);
+            foreach (var objCollider in cellsFound)
+            {
+                var cell = objCollider.GetComponent<Cell>();
+                if (cell != null)
+                    cells.Add(cell);
+            }
+
+            return cells;
+        }
+
         public void BuildOnCurrentCell(GameObject building)
         {
             if (_currentCell.IsConstructible && !_currentCell.HaveBuilding)

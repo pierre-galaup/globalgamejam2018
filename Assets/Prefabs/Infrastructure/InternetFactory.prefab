@@ -1562,3 +1562,4 @@ MonoBehaviour:
   _description: Central node for wired internet network
   _limit: 1
   _infrastructureType: 0
+  _isCentral: 1

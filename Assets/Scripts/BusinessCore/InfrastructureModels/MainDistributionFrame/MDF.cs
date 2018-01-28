@@ -5,9 +5,6 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame
 {
     public class MDF : BaseInfrastructure
     {
-        private Dictionary<InfrastructureLevelType, IInfrastructureLevel> _currentLevels;
-        private BusinessManager _businessManager;
-
         [SerializeField]
         private string _name = "MDF";
 
@@ -19,6 +16,12 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame
 
         [SerializeField]
         private InfrastructureType _infrastructureType = InfrastructureType.WiredInternet;
+
+        [SerializeField]
+        private int _range = 5;
+
+        [SerializeField]
+        private bool _isCentral = false;
 
         public override string Name
         {
@@ -36,6 +39,18 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame
         {
             get { return _limit; }
             protected set { _limit = value; }
+        }
+
+        public override int Range
+        {
+            get { return _range; }
+            protected set { _range = value; }
+        }
+
+        public override bool IsCentral
+        {
+            get { return _isCentral; }
+            protected set { _isCentral = value; }
         }
 
         public override InfrastructureType InfrastructureType

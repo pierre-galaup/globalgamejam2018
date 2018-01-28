@@ -31,6 +31,9 @@ namespace BusinessCore
         double BuildCost { get; }
         double MaintenanceCost { get; }
 
+        bool IsCentral { get; }
+        int Range { get; }
+
         /// <summary>
         /// Type of the infrastructure
         /// </summary>
