@@ -167,6 +167,9 @@ msgstr "Finance"
 msgid "Close"
 msgstr "Close"
 
+msgid "Reset"
+msgstr "Reset"
+
 msgid "Confirm"
 msgstr "Confirm"
 

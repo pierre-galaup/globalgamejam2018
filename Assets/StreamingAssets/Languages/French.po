@@ -173,6 +173,9 @@ msgstr "Confirmer"
 msgid "Cancel"
 msgstr "Annuler"
 
+msgid "Reset"
+msgstr "Restaurer"
+
 msgid "Radio"
 msgstr "Radio"
 

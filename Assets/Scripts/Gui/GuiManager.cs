@@ -19,6 +19,9 @@ namespace Gui
         [SerializeField]
         private Text textYear;
 
+        [SerializeField]
+        private Text _residentsText;
+
         [Header("Infos")]
         [SerializeField]
         private Text _Money;
@@ -69,6 +72,9 @@ namespace Gui
         [SerializeField]
         private BusinessManager _business;
 
+        [SerializeField]
+        private Color _greenColor;
+
         private void Start()
         {
             _menuInteract.SetActive(false);
@@ -100,11 +106,11 @@ namespace Gui
             {
                 _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { (int)(_business.MarketShare * 100) });
             }
-            else if (Event.PropertyName == "Income")
+            else if (Event.PropertyName == "Income" || Event.PropertyName == "MaintenanceCosts")
             {
                 double value = _business.Income - _business.MaintenanceCosts;
                 _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { (int)value });
-                _Gains.color = value <= 0 ? Color.red : Color.green;
+                _Gains.color = value <= 0 ? Color.red : _greenColor;
             }
             else if (Event.PropertyName == "CustomersSatisfaction")
             {
@@ -197,6 +203,7 @@ namespace Gui
         private void ViewPeople(int people)
         {
             textPeople.GetComponent<TranslateText>().SetText("Residents: {0}", new object[] { people });
+            _residentsText.GetComponent<TranslateText>().SetText("Residents: {0}", new object[] { people });
         }
 
         private void ViewMonth(TimeManager.GameTime time)
