@@ -104,6 +104,7 @@ namespace Gui
             {
                 double value = _business.Income - _business.MaintenanceCosts;
                 _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { (int)value });
+                _Gains.color = value <= 0 ? Color.red : Color.green;
             }
             else if (Event.PropertyName == "CustomersSatisfaction")
             {
