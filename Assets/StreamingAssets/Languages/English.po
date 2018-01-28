@@ -140,17 +140,11 @@ msgstr "Report"
 msgid "Satisfaction:"
 msgstr "Satisfaction:"
 
-msgid "Month: {0}"
-msgstr "Mois : {0}"
-
-msgid "Year: {0}"
-msgstr "Année : {0}"
-
 msgid "Report"
 msgstr "Rapport"
 
-msgid "Satisfaction:"
-msgstr "Satisfaction :"
+msgid "Satisfaction: {0}%"
+msgstr "Satisfaction: {0}%"
 
 msgid "Residents: {0}"
 msgstr "Residents: {0}"

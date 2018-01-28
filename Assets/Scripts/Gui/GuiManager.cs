@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GameTime;
 using UnityEngine.UI;
@@ -85,6 +83,7 @@ namespace Gui
             _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
             _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { 0 });
             _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { 0 });
+            _Happy.GetComponent<TranslateText>().SetText("Satisfaction: {0}%", new object[] { 0 });
             if (_business != null)
                 _business.PropertyChanged += UIview;
             TownExpensionManager.OnNewPeople += ViewPeople;
@@ -94,13 +93,21 @@ namespace Gui
         private void UIview(object sender, PropertyChangedEventArgs Event)
         {
             if (Event.PropertyName == "Money")
+            {
                 _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
-            if (Event.PropertyName == "MarketShare")
+            }
+            else if (Event.PropertyName == "MarketShare")
+            {
                 _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { (int)(_business.MarketShare * 100) });
-            if (Event.PropertyName == "Income")
+            }
+            else if (Event.PropertyName == "Income")
             {
                 double value = _business.Income - _business.MaintenanceCosts;
                 _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { value });
+            }
+            else if (Event.PropertyName == "CustomersSatisfaction")
+            {
+                _Happy.GetComponent<TranslateText>().SetText("Satisfaction: {0}%", new object[] { (int)(_business.CustomersSatisfaction * 100) });
             }
         }
 
@@ -114,13 +121,16 @@ namespace Gui
             if (panel == _AboPanel)
             {
                 IEnumerable<CustomersManager> Networks = _business.Networks;
+                int suscribers = 0;
                 foreach (CustomersManager Network in Networks)
                 {
+                    suscribers += Network.SubscribersNumber;
                     if (Network.NetworkType == InfrastructureType.CellularNetwork)
                         _sliderMobile.value = (float)Network.SubscriptionPrice;
                     else
                         _sliderInternet.value = (float)Network.SubscriptionPrice;
                 }
+                textSubs.GetComponent<TranslateText>().SetText("Subscribers: {0}", new object[] { suscribers });
             }
         }
 
@@ -129,13 +139,16 @@ namespace Gui
             _menuInteract.SetActive(true);
             _AboPanel.SetActive(true);
             IEnumerable<CustomersManager> Networks = _business.Networks;
+            int suscribers = 0;
             foreach (CustomersManager Network in Networks)
             {
+                suscribers += Network.SubscribersNumber;
                 if (Network.NetworkType == InfrastructureType.CellularNetwork)
                     _sliderMobile.value = (float)Network.SubscriptionPrice;
                 else
                     _sliderInternet.value = (float)Network.SubscriptionPrice;
             }
+            textSubs.GetComponent<TranslateText>().SetText("Subscribers: {0}", new object[] { suscribers });
         }
 
         public void CloseMenu()
