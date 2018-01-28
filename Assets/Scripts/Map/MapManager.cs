@@ -61,6 +61,16 @@ namespace Map
         [SerializeField]
         private Text _infoPeopleDistrictText;
 
+        [Header("Sounds")]
+        [SerializeField]
+        private AudioSource _constructAudioSource;
+
+        [SerializeField]
+        private AudioSource _destroyAudioSource;
+
+        [SerializeField]
+        private AudioSource _upgradeAudioSource;
+
         private Dictionary<Vector2, GameObject> _mapCells;
         private GameObject _map;
         private Cell _currentCell = null;
@@ -141,7 +151,7 @@ namespace Map
             _currentCell = cell;
             cell.GetComponent<MeshRenderer>().material = _selectedMaterial;
 
-            if (!cell.IsConstructible)
+            if (!cell.IsConstructible) // Si la cellule a un quartier
             {
                 District district = cell.Building.GetComponent<District>();
                 _infoLevelDistrictText.text = district.Level.ToString(CultureInfo.InvariantCulture);
@@ -153,7 +163,7 @@ namespace Map
             {
                 _buildMenu.SetActive(true);
             }
-            else if (cell.HaveBuilding) // Si la cellule a un truc dessus
+            else if (cell.HaveBuilding) // Si la cellule a une infrastructure dessus
             {
                 IInfrastructure infrastructure = cell.Building.GetComponent<IInfrastructure>();
 
@@ -182,6 +192,7 @@ namespace Map
                     Destroy(infrastructure);
                     return;
                 }
+                _constructAudioSource.Play();
                 GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>());
                 infrastructure.SetActive(true);
                 infrastructure.transform.SetParent(_currentCell.transform, false);
@@ -207,6 +218,7 @@ namespace Map
                     Debug.Log("Cannot update");
                     return;
                 }
+                _upgradeAudioSource.Play();
                 GameManager.Instance.BusinessManager.UpgradeTechnology(infrastructure);
             }
 
@@ -227,6 +239,7 @@ namespace Map
                     Debug.Log("Cannot update");
                     return;
                 }
+                _upgradeAudioSource.Play();
                 GameManager.Instance.BusinessManager.UpgradeCapacity(infrastructure);
             }
 
@@ -241,6 +254,7 @@ namespace Map
             {
                 // TODO
 
+                _destroyAudioSource.Play();
                 DestroyImmediate(_currentCell.Building);
                 _currentCell.Building = null;
                 _currentCell.HaveBuilding = false;

@@ -68,6 +68,12 @@ msgstr "Internet mobile"
 msgid "Wired"
 msgstr "Internet fixe"
 
+msgid "Cellular:"
+msgstr "Internet mobile :"
+
+msgid "Wired:"
+msgstr "Internet fixe :"
+
 msgid "Level:"
 msgstr "Niveau : "
 
@@ -121,6 +127,63 @@ msgstr "Fibre"
 
 msgid "AOL"
 msgstr "AOL"
+
+msgid "Month: {0}"
+msgstr "Mois : {0}"
+
+msgid "Year: {0}"
+msgstr "Année : {0}"
+
+msgid "Report"
+msgstr "Rapport"
+
+msgid "Satisfaction:"
+msgstr "Satisfaction :"
+
+msgid "Residents: {0}"
+msgstr "Habitants : {0}"
+
+msgid "Subscribers: {0}"
+msgstr "Abonnés : {0}"
+
+msgid "Money: {0} €"
+msgstr "Monnaie : {0} €"
+
+msgid "Market share: {0}%"
+msgstr "Part de marché : {0}%"
+
+msgid "Income: {0} €"
+msgstr "Revenu : {0} €"
+
+msgid "Subscriptions"
+msgstr "Abonnements"
+
+msgid "Marketing"
+msgstr "Marketing"
+
+msgid "Finance"
+msgstr "Finance"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Newspaper"
+msgstr "Journaux"
+
+msgid "TV"
+msgstr "TV"
+
+msgid "Internet"
+msgstr "Internet"
 
 msgid ""
 msgstr ""

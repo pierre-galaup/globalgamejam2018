@@ -8,6 +8,7 @@ using Town;
 using BusinessCore;
 using System.ComponentModel;
 using Game;
+using Translation;
 
 namespace Gui
 {
@@ -32,7 +33,7 @@ namespace Gui
 
         [SerializeField]
         private Text _MarketShare;
-        
+
         [Header("Abo")]
         [SerializeField]
         private Text textPeople;
@@ -70,7 +71,6 @@ namespace Gui
         [SerializeField]
         private BusinessManager _business;
 
-        
         private void Start()
         {
             _menuInteract.SetActive(false);
@@ -82,35 +82,31 @@ namespace Gui
         private void Awake()
         {
             _business = GameManager.Instance.BusinessManager;
-            _Money.text = "Argent = " + _business.Money + "$";
-            _MarketShare.text = "MarketShare = 0 %";
-            _Gains.text = "Income = 0 $";
+            _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
+            _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { 0 });
+            _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { 0 });
             if (_business != null)
                 _business.PropertyChanged += UIview;
             TownExpensionManager.OnNewPeople += ViewPeople;
             TimeManager.OnNewMonth += ViewMonth;
-
         }
 
         private void UIview(object sender, PropertyChangedEventArgs Event)
         {
             if (Event.PropertyName == "Money")
-                _Money.text = "Argent = " + _business.Money + "$";
+                _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
             if (Event.PropertyName == "MarketShare")
-                _MarketShare.text = "MarketShare = " + (int)(_business.MarketShare * 100) + "%";
+                _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { (int)(_business.MarketShare * 100) });
             if (Event.PropertyName == "Income")
             {
                 double value = _business.Income - _business.MaintenanceCosts;
-                if (value >= 0)
-                    _Gains.text = "Income = " + value + "$";
-                else
-                    _Gains.text = "Income = " + value + "$";
+                _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { value });
             }
         }
 
         public void ChangePanel(GameObject panel)
         {
-             _AboPanel.SetActive(false);
+            _AboPanel.SetActive(false);
             _MarkPanel.SetActive(false);
             _FinaPanel.SetActive(false);
 
@@ -124,7 +120,6 @@ namespace Gui
                         _sliderMobile.value = (float)Network.SubscriptionPrice;
                     else
                         _sliderInternet.value = (float)Network.SubscriptionPrice;
-
                 }
             }
         }
@@ -140,7 +135,6 @@ namespace Gui
                     _sliderMobile.value = (float)Network.SubscriptionPrice;
                 else
                     _sliderInternet.value = (float)Network.SubscriptionPrice;
-
             }
         }
 
@@ -161,7 +155,6 @@ namespace Gui
                     Network.SubscriptionPrice = (double)_sliderMobile.value;
                 else
                     Network.SubscriptionPrice = (double)_sliderInternet.value;
-
             }
         }
 
@@ -174,29 +167,28 @@ namespace Gui
                     _sliderMobile.value = (float)Network.SubscriptionPrice;
                 else
                     _sliderInternet.value = (float)Network.SubscriptionPrice;
-
             }
         }
 
         public void priceUpdateInternet()
         {
-            _priceInternet.text = _sliderInternet.value + "$";
+            _priceInternet.text = _sliderInternet.value + " €";
         }
 
         public void priceUpdateMobile()
         {
-            _priceMobile.text = _sliderMobile.value + "$";
+            _priceMobile.text = _sliderMobile.value + " €";
         }
 
         private void ViewPeople(int people)
         {
-            textPeople.text = "Habitants : " + people;
+            textPeople.GetComponent<TranslateText>().SetText("Residents: {0}", new object[] { people });
         }
 
         private void ViewMonth(TimeManager.GameTime time)
         {
-            textMonth.text = "Month : " + time.Months;
-            textYear.text = "Year : " + time.Years;
+            textMonth.GetComponent<TranslateText>().SetText("Month: {0}", new object[] { time.Months });
+            textYear.GetComponent<TranslateText>().SetText("Year: {0}", new object[] { time.Years });
         }
 
         private void OnDestroy()
@@ -205,7 +197,5 @@ namespace Gui
             TimeManager.OnNewMonth -= ViewMonth;
             _business.PropertyChanged -= UIview;
         }
-
-
     }
 }
