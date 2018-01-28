@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.CellularCentral.Upgrades
 
         public LevelTwo()
         {
-            this.Name = "Level Two";
+            this.Name = "Level 2";
             this.Description = "Ok, this is still low capacity, but bigger than before, right? RIGHT?";
             this.InfrastructureLevelType = InfrastructureLevelType.Capacity;
             this.Level = 1;

@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
 
         public LevelFive()
         {
-            this.Name = "Level Five";
+            this.Name = "Level 5";
             this.Description = "I can play to an mmorpg during my mother and my father are watching a movie on their computer !";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 4;

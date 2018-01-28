@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
 
         public LevelSix()
         {
-            this.Name = "Level Six";
+            this.Name = "Level 6";
             this.Description = "Too much speed ! My computer can't follow my network ! Love it";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 5;

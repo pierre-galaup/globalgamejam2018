@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.CellTower.Upgrades
 
         public LevelFive()
         {
-            this.Name = "Level Five";
+            this.Name = "Level 5";
             this.Description = "Ok, this is still slow, but faster than before, right? RIGHT?";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 4;

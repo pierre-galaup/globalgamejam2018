@@ -32,9 +32,6 @@ namespace Map
         private GameObject _infosMenu;
 
         [SerializeField]
-        private GameObject _disctrictMenu;
-
-        [SerializeField]
         private Text _infoNameText;
 
         [SerializeField]
@@ -42,6 +39,21 @@ namespace Map
 
         [SerializeField]
         private Text _infoMaintenanceCostText;
+
+        [SerializeField]
+        private Text _upgradeTechnologyNameText;
+
+        [SerializeField]
+        private Text _upgradeTechnologyCostText;
+
+        [SerializeField]
+        private Text _upgradeCapacityNameText;
+
+        [SerializeField]
+        private Text _upgradeCapacityCostText;
+
+        [SerializeField]
+        private GameObject _disctrictMenu;
 
         [SerializeField]
         private Text _infoLevelDistrictText;
@@ -145,9 +157,14 @@ namespace Map
             {
                 IInfrastructure infrastructure = cell.Building.GetComponent<IInfrastructure>();
 
-                _infoMaintenanceCostText.text = infrastructure.MaintenanceCost.ToString(CultureInfo.InvariantCulture);
+                _infoMaintenanceCostText.text = infrastructure.MaintenanceCost.ToString(CultureInfo.InvariantCulture) + " €";
                 _infoNameText.GetComponent<TranslateText>().SetText(infrastructure.Name);
                 _infoTypeText.GetComponent<TranslateText>().SetText(infrastructure.InfrastructureType == InfrastructureType.CellularNetwork ? "Cellular" : "Wired");
+
+                _upgradeCapacityCostText.text = infrastructure.GetNextUpgrade(InfrastructureLevelType.Capacity).BuildCost.ToString(CultureInfo.InvariantCulture) + " €";
+                _upgradeCapacityNameText.GetComponent<TranslateText>().SetText(infrastructure.GetNextUpgrade(InfrastructureLevelType.Capacity).Name);
+                _upgradeTechnologyCostText.text = infrastructure.GetNextUpgrade(InfrastructureLevelType.Technology).BuildCost.ToString(CultureInfo.InvariantCulture) + " €";
+                _upgradeTechnologyNameText.GetComponent<TranslateText>().SetText(infrastructure.GetNextUpgrade(InfrastructureLevelType.Technology).Name);
 
                 _infosMenu.SetActive(true);
             }

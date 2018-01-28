@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.WiredInternetCentral.Upgrades
 
         public LevelFour()
         {
-            this.Name = "Level Four";
+            this.Name = "Level 4";
             this.Description = "More Speed ! I can watch a video and play videogames!";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 3;

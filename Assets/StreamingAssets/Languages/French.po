@@ -41,6 +41,12 @@ msgstr "Augmentation de la technologie"
 msgid "Capacity upgrade"
 msgstr "Augmentation de la capacité"
 
+msgid "Technology"
+msgstr "Technologie"
+
+msgid "Capacity"
+msgstr "Capacité"
+
 msgid "Destroy"
 msgstr "Détruire"
 
@@ -67,6 +73,54 @@ msgstr "Niveau : "
 
 msgid "People:"
 msgstr "Habitants : "
+
+msgid "Upgrade informations"
+msgstr "Informations d'augmentation"
+
+msgid "Building informations"
+msgstr "Informations du bâtiment"
+
+msgid "District informations"
+msgstr "Informations du quartier"
+
+msgid "Upgrade cost:"
+msgstr "Coût : "
+
+msgid "Type:"
+msgstr "Type : "
+
+msgid "Level 1"
+msgstr "Niveau 1"
+
+msgid "Level 2"
+msgstr "Niveau 2"
+
+msgid "Level 3"
+msgstr "Niveau 3"
+
+msgid "Level 4"
+msgstr "Niveau 4"
+
+msgid "Level 5"
+msgstr "Niveau 5"
+
+msgid "Level 6"
+msgstr "Niveau 6"
+
+msgid "VDSL"
+msgstr "VDSL"
+
+msgid "56 kbit/s"
+msgstr "56 kbit/s"
+
+msgid "1200 bit/s"
+msgstr "1200 bit/s"
+
+msgid "Fiber"
+msgstr "Fibre"
+
+msgid "AOL"
+msgstr "AOL"
 
 msgid ""
 msgstr ""

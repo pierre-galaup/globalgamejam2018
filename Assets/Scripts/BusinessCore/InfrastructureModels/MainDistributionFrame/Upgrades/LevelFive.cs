@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame.Upgrades
 
         public LevelFive()
         {
-            this.Name = "LevelFive";
+            this.Name = "Level 5";
             this.Description = "I can play to an mmorpg during my mother and my father are watching a movie on their computer !";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 4;

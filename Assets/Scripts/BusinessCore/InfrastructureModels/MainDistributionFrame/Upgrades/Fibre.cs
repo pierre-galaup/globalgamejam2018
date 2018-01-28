@@ -17,7 +17,7 @@ namespace BusinessCore.InfrastructureModels.MainDistributionFrame.Upgrades
 
         public Fibre()
         {
-            this.Name = "Fibre";
+            this.Name = "Fiber";
             this.Description = "Too much speed ! My computer can't follow my network ! Love it";
             this.InfrastructureLevelType = InfrastructureLevelType.Technology;
             this.Level = 5;
