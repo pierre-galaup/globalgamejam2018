@@ -208,7 +208,7 @@ namespace Map
                     return;
                 }
                 _constructAudioSource.Play();
-                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>());
+                GameManager.Instance.BusinessManager.Build(infrastructure.GetComponent<IInfrastructure>(), _currentCell);
                 infrastructure.SetActive(true);
                 infrastructure.transform.SetParent(_currentCell.transform, false);
 
@@ -234,7 +234,7 @@ namespace Map
                     return;
                 }
                 _upgradeAudioSource.Play();
-                GameManager.Instance.BusinessManager.UpgradeTechnology(infrastructure);
+                GameManager.Instance.BusinessManager.UpgradeTechnology(infrastructure, _currentCell);
             }
 
             _infosMenu.SetActive(false);
@@ -255,7 +255,7 @@ namespace Map
                     return;
                 }
                 _upgradeAudioSource.Play();
-                GameManager.Instance.BusinessManager.UpgradeCapacity(infrastructure);
+                GameManager.Instance.BusinessManager.UpgradeCapacity(infrastructure, _currentCell);
             }
 
             _infosMenu.SetActive(false);
