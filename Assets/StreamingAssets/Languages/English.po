@@ -135,12 +135,6 @@ msgid "Year: {0}"
 msgstr "Year: {0}"
 
 msgid "Report"
-msgstr "Report"
-
-msgid "Satisfaction:"
-msgstr "Satisfaction:"
-
-msgid "Report"
 msgstr "Rapport"
 
 msgid "Satisfaction: {0}%"
