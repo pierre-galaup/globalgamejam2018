@@ -205,9 +205,11 @@ namespace BusinessCore
             }
             if (marketShares.Any())
                 this.MarketShare = marketShares.Average();
+            var maintenanceCost = this._infrastructuresList.Sum(e => e.MaintenanceCost);
+            this.MaintenanceCosts = maintenanceCost +  10 * totalSubscribers;
             this.Income = income;
-            this.Money += this.Income - (this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers);
-            Debug.Log($"Account: {this.Money}€ - Maintenance costs: {(this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers)}€ - Income: {this.Income}€ - Market Share: {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
+            this.Money += this.Income - this.MaintenanceCosts;
+            Debug.Log($"Account: {this.Money}€ - Maintenance costs: {this.MaintenanceCosts}€ - Income: {this.Income}€ - Market Share: {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
             if (this.Money < 0)
                 this._gameManager.GameOver();
         }

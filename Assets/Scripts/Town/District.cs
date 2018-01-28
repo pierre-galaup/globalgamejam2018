@@ -10,7 +10,7 @@ namespace Town
     public class District : MonoBehaviour
     {
         public int Level = 1;
-        public int Peoples = 10000;
+        public int Peoples = 0;
 
         private float _growthRate = 0.1f;
         private Coroutine _coroutine;
