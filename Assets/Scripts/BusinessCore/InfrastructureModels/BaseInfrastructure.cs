@@ -7,7 +7,8 @@ namespace BusinessCore.InfrastructureModels
 {
     public abstract class BaseInfrastructure : MonoBehaviour, IInfrastructure
     {
-        protected Dictionary<InfrastructureLevelType, IInfrastructureLevel> CurrentLevelsDict;
+        protected Dictionary<InfrastructureLevelType, IInfrastructureLevel> CurrentLevelsDict =
+            new Dictionary<InfrastructureLevelType, IInfrastructureLevel>();
         protected BusinessManager BusinessManager;
 
         public int Id { get; protected set; }
@@ -59,7 +60,6 @@ namespace BusinessCore.InfrastructureModels
         {
             this.Id = GameManager.Instance.BusinessManager.GetId;
             this.BusinessManager = GameManager.Instance.BusinessManager;
-            this.CurrentLevelsDict = new Dictionary<InfrastructureLevelType, IInfrastructureLevel>();
             this.Upgrades = new Dictionary<InfrastructureLevelType, IEnumerable<IInfrastructureLevel>>();
             this.InitializeUpgrades();
 

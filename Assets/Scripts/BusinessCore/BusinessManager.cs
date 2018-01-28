@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Game;
 using GameTime;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace BusinessCore
 {
-    public class BusinessManager : MonoBehaviour
+    public class BusinessManager : MonoBehaviour, INotifyPropertyChanged
     {
         /// <summary>
         /// Get an unique id
@@ -18,6 +21,7 @@ namespace BusinessCore
         /// </summary>
         private readonly List<IInfrastructure> _infrastructuresList = new List<IInfrastructure>();
 
+        [SerializeField]
         private List<CustomersManager> _networks = new List<CustomersManager>();
 
         private static int _lastId = 0;
@@ -25,18 +29,53 @@ namespace BusinessCore
         [SerializeField] private GameManager _gameManager;
 
         [SerializeField] private double _money = 20000;
+        private double _income;
+        private double _marketShare;
+        private double _maintenanceCosts;
 
         public double Money
         {
             get { return _money; }
-            private set { _money = value; }
+            private set
+            {
+                if (value.Equals(_money)) return;
+                _money = value;
+                OnPropertyChanged();
+            }
         }
 
-        public double Income { get; private set; }
+        public double Income
+        {
+            get { return _income; }
+            private set
+            {
+                if (value.Equals(_income)) return;
+                _income = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double MarketShare { get; private set; }
+        public double MarketShare
+        {
+            get { return _marketShare; }
+            private set
+            {
+                if (value.Equals(_marketShare)) return;
+                _marketShare = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public double MaintenanceCosts { get; private set; }
+        public double MaintenanceCosts
+        {
+            get { return _maintenanceCosts; }
+            private set
+            {
+                if (value.Equals(_maintenanceCosts)) return;
+                _maintenanceCosts = value;
+                OnPropertyChanged();
+            }
+        }
 
         private void Awake()
         {
@@ -69,7 +108,19 @@ namespace BusinessCore
             this.MaintenanceCosts += infrastructureToBuild.MaintenanceCost;
             var customersManager = this.gameObject.AddComponent<CustomersManager>();
             customersManager.NetworkType = infrastructureToBuild.InfrastructureType;
-            this._networks.Add(customersManager);
+
+            if (this._networks.All(e => e.NetworkType != infrastructureToBuild.InfrastructureType))
+                this._networks.Add(customersManager); // We have a new network here
+
+            var network = this._networks.FirstOrDefault(e => e.NetworkType == infrastructureToBuild.InfrastructureType);
+            if (!network)
+                return false;
+            var levels = infrastructureToBuild.CurrentLevels;
+            foreach (var level in levels)
+            {
+                network.CustomerSatisfactionVariation *= level.SatisfactionProvided;
+            }
+
             return true;
         }
 
@@ -121,12 +172,13 @@ namespace BusinessCore
                 this.Income += customersManager.MonthlyIncome;
                 marketShares.Add(customersManager.MarketShare);
                 totalSubscribers += customersManager.SubscribersNumber;
+                Debug.Log($"Network: {customersManager.NetworkType} - Customer Satisfaction Variation {customersManager.CustomerSatisfactionVariation} - Market variation: {customersManager.MarketShareVariation} - Satisfaction: {customersManager.CustomerSatisfaction} (+/- {customersManager.CustomerSatisfactionVariation})");
             }
             if (marketShares.Any())
                 this.MarketShare = marketShares.Average();
             this.Money += this.Income;
-            this.Money -= this.MaintenanceCosts;
-            Debug.Log($"Account: ${this.Money} - Maintenance costs: ${this.MaintenanceCosts} - Income: ${this.Income} - Market Share : {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
+            this.Money =  this.Money - (this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers);
+            Debug.Log($"Account: {this.Money}€ - Maintenance costs: {(this.MaintenanceCosts + this.MaintenanceCosts * 0.07 * totalSubscribers)}€ - Income: {this.Income}€ - Market Share: {this.MarketShare * 100}% of {GameManager.Instance.TownExpensionManager.GetPeoplesNumber()} habs - Subscribers: {totalSubscribers}");
             if (this.Money < 0)
                 this._gameManager.GameOver();
         }
@@ -134,6 +186,14 @@ namespace BusinessCore
         private void OnDestroy()
         {
             TimeManager.OnNewMonth -= this.OnNewMonth;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
