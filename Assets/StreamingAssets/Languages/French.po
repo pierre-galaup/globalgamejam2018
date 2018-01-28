@@ -44,5 +44,29 @@ msgstr "Augmentation de la capacité"
 msgid "Destroy"
 msgstr "Détruire"
 
+msgid "Informations"
+msgstr "Informations"
+
+msgid "Name:"
+msgstr "Nom : "
+
+msgid "Network:"
+msgstr "Réseau : "
+
+msgid "Monthly cost:"
+msgstr "Coût mensuel : "
+
+msgid "Cellular"
+msgstr "Internet mobile"
+
+msgid "Wired"
+msgstr "Internet fixe"
+
+msgid "Level:"
+msgstr "Niveau : "
+
+msgid "People:"
+msgstr "Habitants : "
+
 msgid ""
 msgstr ""

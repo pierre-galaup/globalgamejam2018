@@ -44,5 +44,29 @@ msgstr "Capacity upgrade"
 msgid "Destroy"
 msgstr "Destroy"
 
+msgid "Informations"
+msgstr "Informations"
+
+msgid "Name:"
+msgstr "Name: "
+
+msgid "Network:"
+msgstr "Network: "
+
+msgid "Monthly cost:"
+msgstr "Monthly cost:"
+
+msgid "Cellular"
+msgstr "Cellular"
+
+msgid "Wired"
+msgstr "Wired"
+
+msgid "Level:"
+msgstr "Level: "
+
+msgid "People:"
+msgstr "People: "
+
 msgid ""
 msgstr ""
