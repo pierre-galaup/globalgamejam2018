@@ -9928,6 +9928,8 @@ MonoBehaviour:
     Level: 2
   - Building: {fileID: 1706409288021926, guid: a3d636720841dcd46b1745902adbc476, type: 2}
     Level: 2
+  - Building: {fileID: 1858006946568730, guid: 0e2f9bce99395cb4a94db459ced67c78, type: 2}
+    Level: 3
 --- !u!1 &1537440911
 GameObject:
   m_ObjectHideFlags: 0
