@@ -71,6 +71,9 @@ namespace Town
                 if (!_cell.InNetworkRange && Peoples >= 12)
                     Peoples = 11;
 
+                if (Peoples > 700)
+                    Peoples = 700;
+
                 if (Peoples >= 500 && Level != 5)
                 {
                     Level = 5;

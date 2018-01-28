@@ -156,39 +156,41 @@ namespace BusinessCore
             if (currentTime.Years < 1985)
             {
                 if (this.SubscriptionPrice < 30)
-                    this.CustomerSatisfactionVariation *= 1.25;
+                    this.CustomerSatisfactionVariation = 1.25;
                 else if (this.SubscriptionPrice < 60)
-                    this.CustomerSatisfactionVariation *= 1.05;
+                    this.CustomerSatisfactionVariation = 1.05;
                 else if (this.SubscriptionPrice < 120)
-                    this.CustomerSatisfactionVariation *= 0.95;
+                    this.CustomerSatisfactionVariation = 0.95;
                 else
-                    this.CustomerSatisfactionVariation *= 0.9;
+                    this.CustomerSatisfactionVariation = 0.9;
             }
             else if (currentTime.Years < 1990)
             {
                 if (this.SubscriptionPrice < 30)
-                    this.CustomerSatisfactionVariation *= 1.1;
+                    this.CustomerSatisfactionVariation = 1.1;
                 else if (this.SubscriptionPrice < 60)
-                    this.CustomerSatisfactionVariation *= 1.03;
+                    this.CustomerSatisfactionVariation = 1.03;
                 else if (this.SubscriptionPrice < 120)
-                    this.CustomerSatisfactionVariation *= 0.9;
+                    this.CustomerSatisfactionVariation = 0.9;
                 else
-                    this.CustomerSatisfactionVariation *= 0.8;
+                    this.CustomerSatisfactionVariation = 0.8;
             }
             else
             {
                 if (this.SubscriptionPrice < 5)
-                    this.CustomerSatisfactionVariation *= 1.05;
+                    this.CustomerSatisfactionVariation = 1.05;
+                else if (this.SubscriptionPrice < 20)
+                    this.CustomerSatisfactionVariation = 1.03;
                 else if (this.SubscriptionPrice < 30)
-                    this.CustomerSatisfactionVariation *= 1.01;
+                    this.CustomerSatisfactionVariation = 1.01;
                 else if (this.SubscriptionPrice < 40)
-                    this.CustomerSatisfactionVariation *= 0.98;
+                    this.CustomerSatisfactionVariation = 0.98;
                 else if (this.SubscriptionPrice < 60)
-                    this.CustomerSatisfactionVariation *= 0.93;
+                    this.CustomerSatisfactionVariation = 0.96;
                 else if (this.SubscriptionPrice < 120)
-                    this.CustomerSatisfactionVariation *= 0.9;
+                    this.CustomerSatisfactionVariation = 0.94;
                 else
-                    this.CustomerSatisfactionVariation *= 0.85;
+                    this.CustomerSatisfactionVariation = 0.85;
             }
         }
 
@@ -197,19 +199,19 @@ namespace BusinessCore
             if (this.CustomerSatisfaction < 0.15)
                 this.MarketShareVariation = 0.80;
             if (this.CustomerSatisfaction < 0.3)
-                this.MarketShareVariation = 0.90;
+                this.MarketShareVariation = 0.95;
             else if (this.CustomerSatisfaction < 0.40)
-                this.MarketShareVariation = 0.92;
+                this.MarketShareVariation = 0.98;
             else if (this.CustomerSatisfaction < 0.50)
-                this.MarketShareVariation = 0.96;
+                this.MarketShareVariation = 0.99;
             else if (this.CustomerSatisfaction < 0.60)
                 this.MarketShareVariation = 1;
             else if (this.CustomerSatisfaction < 0.70)
-                this.MarketShareVariation = 1.01;
+                this.MarketShareVariation = 1.005;
             else if (this.CustomerSatisfaction < 0.80)
-                this.MarketShareVariation = 1.03;
+                this.MarketShareVariation = 1.01;
             else if (this.CustomerSatisfaction <= 1)
-                this.MarketShareVariation = 1.05;
+                this.MarketShareVariation = 1.02;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
