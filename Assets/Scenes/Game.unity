@@ -9915,6 +9915,10 @@ MonoBehaviour:
     Level: 5
   - Building: {fileID: 1678137092998550, guid: 6e644f1cd3ad7a646b4fd6a750ce5518, type: 2}
     Level: 5
+  - Building: {fileID: 1635395097206290, guid: 2368fc747f8385b42b7c7ab88f032afa, type: 2}
+    Level: 1
+  - Building: {fileID: 1241059658154418, guid: 76c9067485352cc4283e4f522e4f1db4, type: 2}
+    Level: 1
 --- !u!1 &1537440911
 GameObject:
   m_ObjectHideFlags: 0

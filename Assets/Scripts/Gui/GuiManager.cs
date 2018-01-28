@@ -80,7 +80,7 @@ namespace Gui
         private void Awake()
         {
             _business = GameManager.Instance.BusinessManager;
-            _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
+            _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { (int)_business.Money });
             _MarketShare.GetComponent<TranslateText>().SetText("Market share: {0}%", new object[] { 0 });
             _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { 0 });
             _Happy.GetComponent<TranslateText>().SetText("Satisfaction: {0}%", new object[] { 0 });
@@ -94,7 +94,7 @@ namespace Gui
         {
             if (Event.PropertyName == "Money")
             {
-                _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { _business.Money });
+                _Money.GetComponent<TranslateText>().SetText("Money: {0} €", new object[] { (int)_business.Money });
             }
             else if (Event.PropertyName == "MarketShare")
             {
@@ -103,7 +103,7 @@ namespace Gui
             else if (Event.PropertyName == "Income")
             {
                 double value = _business.Income - _business.MaintenanceCosts;
-                _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { value });
+                _Gains.GetComponent<TranslateText>().SetText("Income: {0} €", new object[] { (int)value });
             }
             else if (Event.PropertyName == "CustomersSatisfaction")
             {
